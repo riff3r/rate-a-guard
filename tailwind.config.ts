@@ -1,3 +1,4 @@
+const { fontFamily } = require('tailwindcss/defaultTheme');
 import type { Config } from "tailwindcss";
 
 export default {
@@ -55,7 +56,11 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		fontFamily: {
+			sans: ['var(--font-poppins)', ...fontFamily.sans], // Set Poppins as the default sans-serif
+			poppins: ['var(--font-poppins)', 'sans-serif'], // Optional: Custom class
+		},
   	}
   },
   plugins: [require("tailwindcss-animate")],
