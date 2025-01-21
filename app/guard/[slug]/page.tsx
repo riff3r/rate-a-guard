@@ -101,7 +101,22 @@ const page = () => {
         </Button>
 
         <div className="flex flex-col gap-5">
-          <div className="flex gap-2 p-5 bg-primary-foreground"></div>
+          <div className="flex gap-2 p-5 bg-primary-foreground">
+            <div className="flex gap-5">
+              <div className="h-16 min-w-[72px] bg-destructive font-poppins text-3xl font-extrabold flex justify-center items-center">
+                4.8
+              </div>
+
+              <div>
+                Moraguez is such a nice person! She&apos;s interested in
+                students learning the material, she&apos;s willing to answer
+                questions about the material in class. She&apos;s young, so she
+                understands that this is not the only class her students take.
+                Really enjoyed her, would highly recommend this class to anyone
+                that enjoys American politics.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
