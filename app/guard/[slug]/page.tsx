@@ -1,7 +1,7 @@
+import React from "react";
+import { ArrowRight, Bookmark, ChevronDown } from "lucide-react";
 import GuardRatingChart from "@/components/guard/GuardRatingChart";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Bookmark, ChevronDown } from "lucide-react";
-import React from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const page = () => {

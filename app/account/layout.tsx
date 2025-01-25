@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import "../globals.css";
 import Navbar from "@/components/dashboard/navbar/Navbar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Footer from "@/components/dashboard/footer/Footer";
+import "../globals.css";
 
 export const metadata: Metadata = {
     title: "Dashboard",
