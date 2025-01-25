@@ -4,12 +4,7 @@ import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Building2, ChevronDown, Pencil, User } from "lucide-react";
 import { Input } from "./input";
 import { Popover, PopoverContent } from "./popover";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "./dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu";
 
 const Search: React.FC = () => {
     const [isSearchingGuard, setIsSearchingGuard] = useState(true);
@@ -19,20 +14,12 @@ const Search: React.FC = () => {
         <>
             <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center text-white select-none focus: outline-none">
-                    {isSearchingGuard ? (
-                        <User size={20} />
-                    ) : (
-                        <Building2 size={20} />
-                    )}{" "}
-                    <div className="ml-1 mr-2">
-                        {isSearchingGuard ? "Guard" : "Company"}
-                    </div>
+                    {isSearchingGuard ? <User size={20} /> : <Building2 size={20} />}{" "}
+                    <div className="ml-1 mr-2">{isSearchingGuard ? "Guard" : "Company"}</div>
                     <ChevronDown size={20} strokeWidth={3} />
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent
-                    onClick={() => setIsSearchingGuard(!isSearchingGuard)}
-                >
+                <DropdownMenuContent onClick={() => setIsSearchingGuard(!isSearchingGuard)}>
                     {isSearchingGuard ? (
                         <DropdownMenuItem>
                             <Building2 size={20} />
@@ -55,9 +42,7 @@ const Search: React.FC = () => {
                         className="w-[350px]"
                     />
                 </PopoverTrigger>
-                <PopoverContent>
-                    Place content for the popover here.
-                </PopoverContent>
+                <PopoverContent>Place content for the popover here.</PopoverContent>
             </Popover>
 
             {isSearchingGuard && (

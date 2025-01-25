@@ -42,3 +42,5 @@ next-env.d.ts
 
 # others
 .idea
+
+package-lock.json

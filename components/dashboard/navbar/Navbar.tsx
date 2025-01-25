@@ -1,58 +1,52 @@
 import React from "react";
 import { Button } from "../../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import Search from "@/components/ui/search";
 
 const Navbar: React.FC = () => {
-  
-  return (
-    <div className="bg-foreground px-6 py-3">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black">
-              RAG
+    return (
+        <div className="bg-foreground px-6 py-3">
+            <div className="container mx-auto">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-6">
+                        <div className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black">RAG</div>
+
+                        <Search />
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="flex p-1 px-3 items-center text-white rounded-full font-semibold select-none bg-foreground hover:bg-neutral-700 focus: outline-none">
+                                Hey, User
+                            </DropdownMenuTrigger>
+
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                    Profile
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                    Account Settings
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                    Your Ratings
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                    Saved Guards
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                    Logout
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <Button className="rounded-full bg-white font-semibold text-black select-none	hover:bg-neutral-700 hover:text-white h-8">
+                            Help
+                        </Button>
+                    </div>
+                </div>
             </div>
-            
-            <Search/>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex p-1 px-3 items-center text-white rounded-full font-semibold select-none bg-foreground hover:bg-neutral-700 focus: outline-none">
-                Hey, User
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem className="focus:bg-primary focus:text-white">
-                  Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-primary focus:text-white">
-                  Account Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-primary focus:text-white">
-                  Your Ratings
-                </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-primary focus:text-white">
-                  Saved Guards
-                </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-primary focus:text-white">
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <Button className='rounded-full bg-white font-semibold text-black select-none	hover:bg-neutral-700 hover:text-white h-8'>Help</Button>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Navbar;
