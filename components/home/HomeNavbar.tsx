@@ -22,7 +22,7 @@ const HomeNavbar = () => {
               Register
             </Button>
 
-            {/* <Button className='rounded-full bg-white font-semibold text-black hover:bg-neutral-700 hover:text-white h-8'>Help</Button> */}
+            <Button className='rounded-full bg-white font-semibold text-black hover:bg-neutral-700 hover:text-white h-8'>Help</Button>
           </div>
         </div>
       </div>
