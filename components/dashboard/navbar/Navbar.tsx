@@ -1,7 +1,4 @@
-"use client";
-import React, { useState } from "react";
-import { Building2, ChevronDown, Pencil, User } from "lucide-react";
-import { Input } from "../../ui/input";
+import React from "react";
 import { Button } from "../../ui/button";
 import {
   DropdownMenu,
@@ -9,12 +6,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import { PopoverTrigger } from "@radix-ui/react-popover";
-import { Popover, PopoverContent } from "../../ui/popover";
+import Search from "@/components/ui/search";
 
 const Navbar: React.FC = () => {
-  const [isSearchingGuard, setIsSearchingGuard] = useState(true);
-  const [isSearchingCompany, setIsSearchingCompany] = useState(false);
+  
   return (
     <div className="bg-foreground px-6 py-3">
       <div className="container mx-auto">
@@ -23,89 +18,14 @@ const Navbar: React.FC = () => {
             <div className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black">
               RAG
             </div>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center text-white">
-                {isSearchingGuard ? (
-                  <User size={20} />
-                ) : (
-                  <Building2 size={20} />
-                )}{" "}
-                <div className="ml-1 mr-2">
-                  {isSearchingGuard ? "Guard" : "Company"}
-                </div>
-                <ChevronDown size={20} strokeWidth={3} />
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent
-                onClick={() => setIsSearchingGuard(!isSearchingGuard)}
-              >
-                {isSearchingGuard ? (
-                  <DropdownMenuItem>
-                    <Building2 size={20} />
-                    Company
-                  </DropdownMenuItem>
-                ) : (
-                  <DropdownMenuItem>
-                    <User size={20} />
-                    Guard
-                  </DropdownMenuItem>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <Popover>
-              <PopoverTrigger>
-                <Input
-                  type="text"
-                  placeholder={isSearchingGuard ? "Guard Name" : "Company Name"}
-                  className="w-[350px]"
-                />
-              </PopoverTrigger>
-              <PopoverContent>
-                Place content for the popover here.
-              </PopoverContent>
-            </Popover>
-
-            {isSearchingGuard && (
-              <>
-                <div className="text-white">at</div>
-                {isSearchingCompany ? (
-                  <Input
-                    type="text"
-                    placeholder="Company Name"
-                    className="w-[250px]"
-                    onMouseLeave={() => setIsSearchingCompany(false)}
-                  />
-                ) : (
-                  <div className="flex items-center gap-4">
-                    <div
-                      className="underline-offset-3 cursor-pointer font-bold text-white underline"
-                      onClick={() => setIsSearchingCompany(true)}
-                    >
-                      Guard Company
-                    </div>
-                    <Pencil
-                      color="white"
-                      size={18}
-                      className="cursor-pointer"
-                      onClick={() => setIsSearchingCompany(true)}
-                    />
-                  </div>
-                )}
-              </>
-            )}
+            
+            <Search/>
           </div>
 
           <div className="flex items-center gap-4">
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center text-white">
-                <Button
-                  size="sm"
-                  className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
-                >
-                  Hey, User
-                </Button>
+              <DropdownMenuTrigger className="flex p-1 px-3 items-center text-white rounded-full font-semibold select-none bg-foreground hover:bg-neutral-700 focus: outline-none">
+                Hey, User
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end">
@@ -127,7 +47,7 @@ const Navbar: React.FC = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* <Button className='rounded-full bg-white font-semibold text-black hover:bg-neutral-700 hover:text-white h-8'>Help</Button> */}
+            <Button className='rounded-full bg-white font-semibold text-black select-none	hover:bg-neutral-700 hover:text-white h-8'>Help</Button>
           </div>
         </div>
       </div>

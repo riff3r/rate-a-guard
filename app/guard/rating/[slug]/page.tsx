@@ -1,53 +1,104 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import Rating from "@/components/rating/rating";
+import Rehireable from "@/components/rating/rehireable";
 
 const page = () => {
   return (
     <div className="flex flex-col gap-5">
       <div className="border rounded-md shadow-md px-8 py-6">
         <h2 className="text-md font-bold mb-5">
-          Attendance / Punctuality <span className="text-red-500">*</span>{" "}
+          Attendance / Punctuality <span className="text-red-500">*</span>
         </h2>
 
-        <p className="text-center font-semibold">Here will be star rating</p>
+        <div className="flex justify-center">
+          <Rating
+            initialRating={2}
+            onChange={(rating) => {
+              console.log(rating);
+            }}
+          />
+        </div>
       </div>
 
       <div className="border rounded-md shadow-md px-8 py-6">
         <h2 className="text-md font-bold mb-5">
-          Professionalism <span className="text-red-500">*</span>{" "}
+          Professionalism <span className="text-red-500">*</span>
         </h2>
 
-        <p className="text-center font-semibold">Here will be star rating</p>
+        <div className="flex justify-center">
+          <Rating
+            initialRating={3}
+            onChange={(rating) => {
+              console.log(rating);
+            }}
+          />
+        </div>
       </div>
 
       <div className="border rounded-md shadow-md px-8 py-6">
         <h2 className="text-md font-bold mb-5">
-          Productivity <span className="text-red-500">*</span>{" "}
+          Productivity <span className="text-red-500">*</span>
         </h2>
 
-        <p className="text-center font-semibold">Here will be star rating</p>
+        <div className="flex justify-center">
+          <Rating
+            initialRating={4}
+            onChange={(rating) => {
+              console.log(rating);
+            }}
+          />
+        </div>
       </div>
 
       <div className="border rounded-md shadow-md px-8 py-6">
         <h2 className="text-md font-bold mb-5">
-          Customer Service <span className="text-red-500">*</span>{" "}
+          Customer Service <span className="text-red-500">*</span>
         </h2>
 
-        <p className="text-center font-semibold">Here will be star rating</p>
+        <div className="flex justify-center">
+          <Rating
+            initialRating={2}
+            onChange={(rating) => {
+              console.log(rating);
+            }}
+          />
+        </div>
       </div>
 
       <div className="border rounded-md shadow-md px-8 py-6">
         <h2 className="text-md font-bold mb-5">
-          Communication <span className="text-red-500">*</span>{" "}
+          Communication <span className="text-red-500">*</span>
         </h2>
 
-        <p className="text-center font-semibold">Here will be star rating</p>
+        <div className="flex justify-center">
+          <Rating
+            initialRating={3}
+            onChange={(rating) => {
+              console.log(rating);
+            }}
+          />
+        </div>
       </div>
 
       <div className="border rounded-md shadow-md px-8 py-6">
         <h2 className="text-md font-bold mb-5">
-          Write a Review <span className="text-red-500">*</span>{" "}
+          Rehireable <span className="text-red-500">*</span>
+        </h2>
+
+        <div className="flex justify-center">
+          <Rehireable onChange={(rehireable) => {
+            console.log(rehireable);
+          }} />
+        </div>
+      </div>
+
+      <div className="border rounded-md shadow-md px-8 py-6">
+        <h2 className="text-md font-bold mb-5">
+          Write a Review <span className="text-red-500">*</span>
         </h2>
 
         <Textarea className="min-h-32" placeholder="Type your message here." />
