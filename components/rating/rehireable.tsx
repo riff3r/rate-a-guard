@@ -16,7 +16,7 @@ const Rehireable: React.FC<IProps> = ({ defaultChecked = "", onChange }) => {
     };
 
     return (
-        <div className="flex justify-center gap-3">
+        <div className="flex justify-center gap-6">
             <div className="flex items-center">
                 <input
                     id="rehireable-radio-yes"
