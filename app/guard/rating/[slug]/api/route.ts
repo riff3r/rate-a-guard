@@ -11,7 +11,8 @@ type RatingRequest = {
     review: string;
 };
 
-const POST = async (request: Request) => {
+const POST = async (request: Request, { params }: { params: { slug: string } }) => {
+    const { slug } = params;
     const cookieStore = await cookies();
     const sessionToken = cookieStore.get("sessionToken");
     const {
@@ -24,7 +25,7 @@ const POST = async (request: Request) => {
         review,
     }: RatingRequest = await request.json();
 
-    const response = await fetch(`${process.env.RATE_A_GUARD_BACKEND_BASE_URL}/api/employee-ratings/1`, {
+    const response = await fetch(`${process.env.RATE_A_GUARD_BACKEND_BASE_URL}/api/employee-ratings/${slug}`, {
         method: "POST",
         body: JSON.stringify({
             regularityRating,

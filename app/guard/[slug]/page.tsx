@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { redirect } from "next/navigation";
 
-async function fetchGuardData(slug: string) {
+export async function fetchGuardData(slug: string) {
     const cookieStore = await cookies();
     const sessionToken = cookieStore.get("sessionToken");
 
@@ -17,6 +17,8 @@ async function fetchGuardData(slug: string) {
     });
 
     const data = await response.json();
+
+    console.log(data);
 
     return data.data;
 }
