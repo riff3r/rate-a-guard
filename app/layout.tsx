@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
-export const poppins = Poppins({
+const poppins = Poppins({
     subsets: ["latin"],
     weight: ["400", "500", "600", "700"], // Specify the weights you need
     variable: "--font-poppins", // Custom variable for Tailwind
