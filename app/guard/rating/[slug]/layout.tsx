@@ -5,7 +5,7 @@ import Navbar from "@/components/dashboard/navbar/Navbar";
 import "../../../globals.css";
 import { redirect } from "next/navigation";
 
-export async function fetchGuardData(slug: string) {
+async function fetchGuardData(slug: string) {
     const cookieStore = await cookies();
     const sessionToken = cookieStore.get("sessionToken");
 
