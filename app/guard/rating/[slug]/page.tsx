@@ -34,7 +34,7 @@ const Rating = () => {
             });
 
             if (response.ok) {
-                const data = await response.json();
+                // const data = await response.json();
 
                 router.push(`/guard/rating/${slug}/success`);
             } else {
