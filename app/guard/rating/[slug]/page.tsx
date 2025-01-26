@@ -1,121 +1,175 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import Rating from "@/components/rating/rating";
-import Rehireable from "@/components/rating/rehireable";
+import StarRating from "@/components/rating/StarRating";
+import Rehirable from "@/components/rating/Rehirable";
 
-const page = () => {
+const Rating = () => {
+    const searchParams = useParams();
+    const slug = searchParams.slug;
+    const router = useRouter();
+    const [formData, setFormData] = useState({
+        regularityRating: 0,
+        professionalismRating: 0,
+        productivityRating: 0,
+        customerServiceRating: 0,
+        communicationRating: 0,
+        rehirable: "",
+        review: "",
+    });
+
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const handleSubmit = async (event: { preventDefault: () => void }) => {
+        event.preventDefault();
+
+        try {
+            const response = await fetch(`/guard/rating/${slug}/api`, {
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                router.push(`/guard/rating/${slug}/success`);
+            } else {
+                const data = await response.json();
+                setErrorMessage(data.message || "Review submission failed. Please try again.");
+            }
+        } catch (error) {
+            console.error(error);
+            setErrorMessage("An unexpected error occurred. Please try again.");
+        }
+    };
+
     return (
         <div className="flex flex-col gap-5">
-            <div className="border rounded-md shadow-md px-8 py-6">
-                <h2 className="text-md font-bold mb-5">
-                    Attendance / Punctuality <span className="text-red-500">*</span>
-                </h2>
+            {errorMessage && <div className="text-red-500 text-sm text-center">{errorMessage}</div>}
+            <form onSubmit={handleSubmit}>
+                <div className="border rounded-md shadow-md px-8 py-6">
+                    <h2 className="text-md font-bold mb-5">
+                        Attendance / Punctuality <span className="text-red-500">*</span>
+                    </h2>
 
-                <div className="flex justify-center">
-                    <Rating
-                        initialRating={2}
-                        onChange={(rating) => {
-                            console.log(rating);
+                    <div className="flex justify-center">
+                        <StarRating
+                            initialRating={formData.regularityRating}
+                            onChange={(rating: number) => {
+                                setFormData((prevState) => ({ ...prevState, regularityRating: rating }));
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div className="border rounded-md shadow-md px-8 py-6">
+                    <h2 className="text-md font-bold mb-5">
+                        Professionalism <span className="text-red-500">*</span>
+                    </h2>
+
+                    <div className="flex justify-center">
+                        <StarRating
+                            initialRating={formData.professionalismRating}
+                            onChange={(rating: number) => {
+                                setFormData((prevState) => ({ ...prevState, professionalismRating: rating }));
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div className="border rounded-md shadow-md px-8 py-6">
+                    <h2 className="text-md font-bold mb-5">
+                        Productivity <span className="text-red-500">*</span>
+                    </h2>
+
+                    <div className="flex justify-center">
+                        <StarRating
+                            initialRating={formData.productivityRating}
+                            onChange={(rating: number) => {
+                                setFormData((prevState) => ({ ...prevState, productivityRating: rating }));
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div className="border rounded-md shadow-md px-8 py-6">
+                    <h2 className="text-md font-bold mb-5">
+                        Customer Service <span className="text-red-500">*</span>
+                    </h2>
+
+                    <div className="flex justify-center">
+                        <StarRating
+                            initialRating={formData.customerServiceRating}
+                            onChange={(rating: number) => {
+                                setFormData((prevState) => ({ ...prevState, customerServiceRating: rating }));
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div className="border rounded-md shadow-md px-8 py-6">
+                    <h2 className="text-md font-bold mb-5">
+                        Communication <span className="text-red-500">*</span>
+                    </h2>
+
+                    <div className="flex justify-center">
+                        <StarRating
+                            initialRating={formData.communicationRating}
+                            onChange={(rating: number) => {
+                                setFormData((prevState) => ({ ...prevState, communicationRating: rating }));
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div className="border rounded-md shadow-md px-8 py-6">
+                    <h2 className="text-md font-bold mb-5">
+                        Rehirable <span className="text-red-500">*</span>
+                    </h2>
+
+                    <div className="flex justify-center">
+                        <Rehirable
+                            defaultChecked={formData.rehirable}
+                            onChange={(state: string) => {
+                                setFormData((prevState) => ({ ...prevState, rehirable: state }));
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div className="border rounded-md shadow-md px-8 py-6">
+                    <h2 className="text-md font-bold mb-5">
+                        Write a Review <span className="text-red-500">*</span>
+                    </h2>
+
+                    <Textarea
+                        className="min-h-32"
+                        name="review"
+                        placeholder="Type your message here."
+                        value={formData.review}
+                        onChange={(event) => {
+                            setFormData((prevState) => ({ ...prevState, review: event.target.value }));
                         }}
                     />
                 </div>
-            </div>
 
-            <div className="border rounded-md shadow-md px-8 py-6">
-                <h2 className="text-md font-bold mb-5">
-                    Professionalism <span className="text-red-500">*</span>
-                </h2>
+                <div className="border rounded-md shadow-md px-8 py-6 text-center">
+                    <p className="mb-5">
+                        By clicking the &quot;Submit&quot; button, I acknowledge that I have read and agreed to the Rate
+                        A Guard Site Guidelines, Terms of Use and Privacy Policy.
+                    </p>
 
-                <div className="flex justify-center">
-                    <Rating
-                        initialRating={3}
-                        onChange={(rating) => {
-                            console.log(rating);
-                        }}
-                    />
+                    <Button className="rounded-full w-60" type="submit">
+                        Submit Rating
+                    </Button>
                 </div>
-            </div>
-
-            <div className="border rounded-md shadow-md px-8 py-6">
-                <h2 className="text-md font-bold mb-5">
-                    Productivity <span className="text-red-500">*</span>
-                </h2>
-
-                <div className="flex justify-center">
-                    <Rating
-                        initialRating={4}
-                        onChange={(rating) => {
-                            console.log(rating);
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div className="border rounded-md shadow-md px-8 py-6">
-                <h2 className="text-md font-bold mb-5">
-                    Customer Service <span className="text-red-500">*</span>
-                </h2>
-
-                <div className="flex justify-center">
-                    <Rating
-                        initialRating={2}
-                        onChange={(rating) => {
-                            console.log(rating);
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div className="border rounded-md shadow-md px-8 py-6">
-                <h2 className="text-md font-bold mb-5">
-                    Communication <span className="text-red-500">*</span>
-                </h2>
-
-                <div className="flex justify-center">
-                    <Rating
-                        initialRating={3}
-                        onChange={(rating) => {
-                            console.log(rating);
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div className="border rounded-md shadow-md px-8 py-6">
-                <h2 className="text-md font-bold mb-5">
-                    Rehireable <span className="text-red-500">*</span>
-                </h2>
-
-                <div className="flex justify-center">
-                    <Rehireable
-                        onChange={(rehireable) => {
-                            console.log(rehireable);
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div className="border rounded-md shadow-md px-8 py-6">
-                <h2 className="text-md font-bold mb-5">
-                    Write a Review <span className="text-red-500">*</span>
-                </h2>
-
-                <Textarea className="min-h-32" placeholder="Type your message here." />
-            </div>
-
-            <div className="border rounded-md shadow-md px-8 py-6 text-center">
-                <p className="mb-5">
-                    By clicking the &quot;Submit&quot; button, I acknowledge that I have read and agreed to the Rate A
-                    Guard Site Guidelines, Terms of Use and Privacy Policy.
-                </p>
-
-                <Button className="rounded-full w-60">Submit Rating</Button>
-            </div>
+            </form>
         </div>
     );
 };
 
-export default page;
+export default Rating;

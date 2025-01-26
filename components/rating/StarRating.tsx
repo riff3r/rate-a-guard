@@ -4,15 +4,17 @@ import React, { useState } from "react";
 
 interface IProps {
     initialRating?: number;
-    onChange: (rating: number) => void;
+    onChange?: (rating: number) => void;
 }
 
-const Rating: React.FC<IProps> = ({ initialRating = 0, onChange }) => {
+const StarRating: React.FC<IProps> = ({ initialRating = 0, onChange }) => {
     const [rating, setRating] = useState(initialRating);
 
     const handleToggle = (index: number) => {
         setRating(index + 1);
-        onChange(index + 1);
+        if (onChange) {
+            onChange(index + 1);
+        }
     };
 
     return (
@@ -36,4 +38,4 @@ const Rating: React.FC<IProps> = ({ initialRating = 0, onChange }) => {
     );
 };
 
-export default Rating;
+export default StarRating;
