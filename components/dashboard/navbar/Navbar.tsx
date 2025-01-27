@@ -1,9 +1,9 @@
 import React from "react";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { Button } from "../../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import Search from "@/components/ui/search";
-import { redirect } from "next/navigation";
 
 const handleLogout = async () => {
     "use server";
@@ -19,7 +19,16 @@ const Navbar: React.FC = () => {
             <div className="container mx-auto">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-6">
-                        <div className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black">RAG</div>
+                        <div
+                            className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black"
+                            onClick={async () => {
+                                "use server";
+
+                                redirect("/");
+                            }}
+                        >
+                            RAG
+                        </div>
 
                         <Search />
                     </div>
@@ -77,9 +86,9 @@ const Navbar: React.FC = () => {
                             </DropdownMenuContent>
                         </DropdownMenu>
 
-                        <Button className="rounded-full bg-white font-semibold text-black select-none	hover:bg-neutral-700 hover:text-white h-8">
+                        {/* <Button className="rounded-full bg-white font-semibold text-black select-none	hover:bg-neutral-700 hover:text-white h-8">
                             Help
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </div>

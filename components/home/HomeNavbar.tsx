@@ -20,7 +20,16 @@ const HomeNavbar = async () => {
             <div className="container mx-auto">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-6">
-                        <div className="logo bg-black px-6 py-1 text-center text-lg font-semibold text-white">RAG</div>
+                        <div
+                            className="logo bg-black px-6 py-1 text-center text-lg font-semibold text-white"
+                            onClick={async () => {
+                                "use server";
+
+                                redirect("/");
+                            }}
+                        >
+                            RAG
+                        </div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -92,18 +101,18 @@ const HomeNavbar = async () => {
                                 >
                                     Login
                                 </Button>
-                                <Button
+                                {/* <Button
                                     size="sm"
                                     className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
                                 >
                                     Register
-                                </Button>
+                                </Button> */}
                             </>
                         )}
 
-                        <Button className="rounded-full bg-white font-semibold text-black hover:bg-neutral-700 hover:text-white h-8">
+                        {/* <Button className="rounded-full bg-white font-semibold text-black hover:bg-neutral-700 hover:text-white h-8">
                             Help
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </div>
