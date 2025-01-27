@@ -1,7 +1,6 @@
 import React from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { Button } from "../../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import Search from "@/components/ui/search";
 
@@ -20,7 +19,7 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-6">
                         <div
-                            className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black"
+                            className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black cursor-pointer"
                             onClick={async () => {
                                 "use server";
 
