@@ -48,9 +48,9 @@ const Rating = () => {
     };
 
     return (
-        <div className="flex flex-col gap-5">
+        <div>
             {errorMessage && <div className="text-red-500 text-sm text-center">{errorMessage}</div>}
-            <form onSubmit={handleSubmit}>
+            <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                 <div className="border rounded-md shadow-md px-8 py-6">
                     <h2 className="text-md font-bold mb-5">
                         Attendance / Punctuality <span className="text-red-500">*</span>

@@ -21,7 +21,7 @@ const HomeNavbar = async () => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-6">
                         <div
-                            className="logo bg-black px-6 py-1 text-center text-lg font-semibold text-white cursor-default"
+                            className="logo bg-black px-6 py-1 text-center text-lg font-semibold text-white cursor-pointer"
                             onClick={async () => {
                                 "use server";
 
