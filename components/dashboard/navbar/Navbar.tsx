@@ -1,9 +1,10 @@
 import React from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { Button } from "../../ui/button";
+// import { Button } from "../../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
-import Search from "@/components/ui/search";
+// import Search from "@/components/ui/search";
+import SearchGuard from "../search/SearchGuard";
 
 const handleLogout = async () => {
     "use server";
@@ -18,9 +19,9 @@ const Navbar: React.FC = () => {
         <div className="bg-foreground px-6 py-3">
             <div className="container mx-auto">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-6 sm:w-2/5 w-2/3">
                         <div
-                            className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black"
+                            className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black cursor-default"
                             onClick={async () => {
                                 "use server";
 
@@ -30,7 +31,8 @@ const Navbar: React.FC = () => {
                             RAG
                         </div>
 
-                        <Search />
+                        {/* <Search /> */}
+                        <SearchGuard />
                     </div>
 
                     <div className="flex items-center gap-4">
