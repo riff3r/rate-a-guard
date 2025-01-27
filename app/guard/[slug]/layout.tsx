@@ -1,7 +1,7 @@
-import Footer from "@/components/dashboard/footer/Footer";
-import Navbar from "@/components/dashboard/navbar/Navbar";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import Footer from "@/components/dashboard/footer/Footer";
+import Navbar from "@/components/dashboard/navbar/Navbar";
 import "../../globals.css";
 
 const RootLayout = async ({

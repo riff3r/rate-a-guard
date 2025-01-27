@@ -1,7 +1,17 @@
 import React from "react";
+import { cookies } from "next/headers";
 import { Button } from "../../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import Search from "@/components/ui/search";
+import { redirect } from "next/navigation";
+
+const handleLogout = async () => {
+    "use server";
+
+    const cookieStore = await cookies();
+    cookieStore.delete("sessionToken");
+    cookieStore.delete("sessionUser");
+};
 
 const Navbar: React.FC = () => {
     return (
@@ -21,19 +31,47 @@ const Navbar: React.FC = () => {
                             </DropdownMenuTrigger>
 
                             <DropdownMenuContent align="end">
-                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                <DropdownMenuItem
+                                    onClick={async () => {
+                                        "use server";
+
+                                        redirect("/account/profile");
+                                    }}
+                                    className="focus:bg-primary focus:text-white"
+                                >
                                     Profile
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                <DropdownMenuItem
+                                    onClick={async () => {
+                                        "use server";
+
+                                        redirect("/account/profile");
+                                    }}
+                                    className="focus:bg-primary focus:text-white"
+                                >
                                     Account Settings
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                <DropdownMenuItem
+                                    onClick={async () => {
+                                        "use server";
+
+                                        redirect("/account/profile");
+                                    }}
+                                    className="focus:bg-primary focus:text-white"
+                                >
                                     Your Ratings
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                <DropdownMenuItem
+                                    onClick={async () => {
+                                        "use server";
+
+                                        redirect("/account/profile");
+                                    }}
+                                    className="focus:bg-primary focus:text-white"
+                                >
                                     Saved Guards
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="focus:bg-primary focus:text-white">
+                                <DropdownMenuItem onClick={handleLogout} className="focus:bg-primary focus:text-white">
                                     Logout
                                 </DropdownMenuItem>
                             </DropdownMenuContent>

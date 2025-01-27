@@ -18,8 +18,6 @@ async function fetchGuardData(slug: string) {
 
     const data = await response.json();
 
-    console.log(data);
-
     return data.data;
 }
 
@@ -58,11 +56,11 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
     } = guardData;
 
     return (
-        <div>
-            <div className="flex gap-5">
-                <div className="w-4/12">
+        <div className="container mx-auto p-4">
+            <div className="flex flex-col lg:flex-row gap-5">
+                <div className="lg:w-4/12 w-full">
                     <div className="flex gap-2 mb-2">
-                        <div className="text-7xl font-poppins font-[900]">
+                        <div className="text-5xl lg:text-7xl font-poppins font-[900]">
                             {Number(overallRatings).toFixed(1) || "N/A"}
                         </div>
                         <div className="text-base text-gray-400 font-bold top-3 relative">/ 5</div>
@@ -74,7 +72,7 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
                     <div className="flex items-center gap-2 my-5">
                         <div>
-                            <h1 className="font-poppins text-5xl font-black mb-3">
+                            <h1 className="font-poppins text-3xl lg:text-5xl font-black mb-3">
                                 {firstName} {lastName}
                             </h1>
                             <p className="text-sm">
@@ -87,7 +85,7 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
                     <div className="">
                         <Button
-                            className="rounded-full font-extrabold mb-4"
+                            className="rounded-full font-extrabold mb-4 w-full lg:w-auto"
                             size={"lg"}
                             onClick={async () => {
                                 "use server";
@@ -97,51 +95,15 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
                         >
                             Rate <ArrowRight strokeWidth={3} />
                         </Button>
-
-                        {/* <div className="font-bold mb-5">Top Tags</div>
-
-                        <div className="flex gap-2">
-                            {guardData.tags?.map((tag: string, index: number) => (
-                                <Button
-                                    key={index}
-                                    className="rounded-full font-extrabold"
-                                    variant={"secondary"}
-                                    size={"default"}
-                                >
-                                    {tag}
-                                </Button>
-                            ))}
-                        </div> */}
                     </div>
                 </div>
 
-                <div className="w-6/12">
+                <div className="lg:w-6/12 w-full">
                     <GuardRatingChart starCounts={starCounts} />
-
-                    {/* <div className="p-5 bg-primary-foreground">
-                        <p className="font-bold mb-5">Similar Guards</p>
-
-                        <div className="flex gap-2">
-                            {guardData.similarProfessors?.map(
-                                (prof: { name: string; rating: number }, index: number) => (
-                                    <div
-                                        key={index}
-                                        className="flex items-center gap-2 w-full"
-                                    >
-                                        <div className="bg-primary font-poppins text-white font-bold py-2 px-4 flex justify-center items-center">
-                                            {prof.rating.toFixed(2)}
-                                        </div>
-
-                                        <div>{prof.name}</div>
-                                    </div>
-                                )
-                            )}
-                        </div>
-                    </div> */}
                 </div>
             </div>
 
-            <div className="w-8/12">
+            <div className="w-full lg:w-8/12 mt-5">
                 <Tabs defaultValue="profile">
                     <TabsList className="mb-5">
                         <TabsTrigger value="profile">{employeeRatingCount} Ratings</TabsTrigger>
@@ -150,7 +112,7 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
                 <div className="flex flex-col gap-5">
                     {employeeRatings.map((rating: { review: number; overallRating: number }, index: number) => (
-                        <div key={index} className="flex gap-2 p-5 bg-primary-foreground">
+                        <div key={index} className="flex flex-col md:flex-row gap-2 p-5 bg-primary-foreground">
                             <div className="flex gap-5">
                                 <div>
                                     <div className="text-center uppercase font-semibold text-sm">Quality</div>
@@ -159,7 +121,7 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
                                     </div>
                                 </div>
 
-                                <div>{rating.review}</div>
+                                <div className="flex-1">{rating.review}</div>
                             </div>
                         </div>
                     ))}

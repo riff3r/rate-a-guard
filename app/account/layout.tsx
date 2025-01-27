@@ -22,7 +22,7 @@ export default function RootLayout({
                 <div className="mx-auto max-w-[780px] py-10">
                     <h1 className="mb-14 font-poppins text-3xl font-black">Hey, User</h1>
 
-                    <Tabs defaultValue="profile">
+                    <Tabs defaultValue="profile" className="focus: outline-none">
                         <TabsList className="">
                             <TabsTrigger value="profile">Profile</TabsTrigger>
                             <TabsTrigger value="account">Account Settings</TabsTrigger>
@@ -31,10 +31,6 @@ export default function RootLayout({
                         </TabsList>
 
                         {children}
-
-                        {/* <TabsContent value="account">account</TabsContent>
-              <TabsContent value="rating">rating</TabsContent>
-              <TabsContent value="saved">Saved</TabsContent> */}
                     </Tabs>
                 </div>
             </div>

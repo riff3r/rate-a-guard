@@ -13,7 +13,7 @@ const Search: React.FC = () => {
     return (
         <>
             <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-white select-none focus: outline-none">
+                <DropdownMenuTrigger className="flex items-center text-white select-none hidden sm:flex focus: outline-none">
                     {isSearchingGuard ? <User size={20} /> : <Building2 size={20} />}{" "}
                     <div className="ml-1 mr-2">{isSearchingGuard ? "Guard" : "Company"}</div>
                     <ChevronDown size={20} strokeWidth={3} />
@@ -39,7 +39,7 @@ const Search: React.FC = () => {
                     <Input
                         type="text"
                         placeholder={isSearchingGuard ? "Guard Name" : "Company Name"}
-                        className="w-[350px]"
+                        className="w-[350px] hidden sm:block"
                     />
                 </PopoverTrigger>
                 <PopoverContent>Place content for the popover here.</PopoverContent>
@@ -47,7 +47,7 @@ const Search: React.FC = () => {
 
             {isSearchingGuard && (
                 <>
-                    <div className="text-white">at</div>
+                    <div className="text-white hidden sm:block">at</div>
                     {isSearchingCompany ? (
                         <Input
                             type="text"
@@ -56,7 +56,7 @@ const Search: React.FC = () => {
                             onMouseLeave={() => setIsSearchingCompany(false)}
                         />
                     ) : (
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4  hidden sm:flex">
                             <div
                                 className="underline-offset-3 cursor-pointer font-bold text-white underline"
                                 onClick={() => setIsSearchingCompany(true)}
