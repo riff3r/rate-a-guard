@@ -21,7 +21,7 @@ const HomeNavbar = async () => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-6">
                         <div
-                            className="logo bg-black px-6 py-1 text-center text-lg font-semibold text-white cursor-pointer"
+                            className="logo bg-black px-6 py-1 text-center text-lg font-semibold text-white cursor-default"
                             onClick={async () => {
                                 "use server";
 
@@ -101,12 +101,17 @@ const HomeNavbar = async () => {
                                 >
                                     Login
                                 </Button>
-                                {/* <Button
+                                <Button
                                     size="sm"
                                     className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
+                                    onClick={async () => {
+                                        "use server";
+
+                                        redirect("/register/company");
+                                    }}
                                 >
                                     Register
-                                </Button> */}
+                                </Button>
                             </>
                         )}
 

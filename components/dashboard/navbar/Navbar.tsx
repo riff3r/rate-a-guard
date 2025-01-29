@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-6 sm:w-2/5 w-2/3">
                         <div
-                            className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black cursor-pointer"
+                            className="logo bg-white px-6 py-1 text-center text-lg font-semibold text-black cursor-default"
                             onClick={async () => {
                                 "use server";
 
