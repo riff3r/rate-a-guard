@@ -3,6 +3,8 @@ import Navbar from "@/components/dashboard/navbar/Navbar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Footer from "@/components/dashboard/footer/Footer";
 import "../globals.css";
+import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
     title: "Dashboard",
@@ -20,14 +22,36 @@ export default function RootLayout({
 
             <div className="min-h-[calc(100vh-140px)] px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-[780px] py-6 sm:py-10">
-                    <h1 className="mb-8 text-2xl font-black sm:text-3xl">Hey, User</h1>
+                    <div className="flex items-center justify-between">
+                        <h1 className="mb-8 text-2xl font-black sm:text-3xl">Hey, User</h1>
+
+                        <Button
+                            size="sm"
+                            variant={"default"}
+                            className="font-semibold"
+                            onClick={async () => {
+                                "use server";
+                                redirect("/register/guard");
+                            }}
+                        >
+                            Guard Registration
+                        </Button>
+                    </div>
 
                     <Tabs defaultValue="profile" className="focus: outline-none">
                         <TabsList className="flex flex-wrap gap-2 sm:gap-4">
-                            <TabsTrigger value="profile" className="px-4">Profile</TabsTrigger>
-                            <TabsTrigger value="account" className="px-4">Account Settings</TabsTrigger>
-                            <TabsTrigger value="rating" className="px-4">Your Ratings</TabsTrigger>
-                            <TabsTrigger value="saved" className="px-4">Saved Guard</TabsTrigger>
+                            <TabsTrigger value="profile" className="px-4">
+                                Profile
+                            </TabsTrigger>
+                            <TabsTrigger value="account" className="px-4">
+                                Account Settings
+                            </TabsTrigger>
+                            <TabsTrigger value="rating" className="px-4">
+                                Your Ratings
+                            </TabsTrigger>
+                            <TabsTrigger value="saved" className="px-4">
+                                Saved Guard
+                            </TabsTrigger>
                         </TabsList>
 
                         <div className="mt-6">{children}</div>
