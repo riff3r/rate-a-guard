@@ -101,12 +101,17 @@ const HomeNavbar = async () => {
                                 >
                                     Login
                                 </Button>
-                                {/* <Button
+                                <Button
                                     size="sm"
                                     className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
+                                    onClick={async () => {
+                                        "use server";
+
+                                        redirect("/register/company");
+                                    }}
                                 >
                                     Register
-                                </Button> */}
+                                </Button>
                             </>
                         )}
 
