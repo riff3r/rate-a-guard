@@ -1,33 +1,36 @@
+import { apiClient } from "@/lib/apiClient";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Pencil } from "lucide-react";
-import { Metadata } from "next";
-import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+type IUserProfileResponse = {
+    agency: {
+        companyName: string;
+    };
+};
 
 async function fetchUserData() {
-    const cookieStore = await cookies();
-    const sessionToken = cookieStore.get("sessionToken");
+    try {
+        const response = await apiClient<IUserProfileResponse>({
+            url: "/api/users/profile",
+            method: "GET",
+            requireAuth: true,
+        });
 
-    const response = await fetch(`${process.env.RATE_A_GUARD_BACKEND_BASE_URL}/api/users/profile`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${sessionToken?.value}` },
-    });
+        if (response.data) {
+            return response.data;
+        }
 
-    const data = await response.json();
-
-    return data.data;
-}
-
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: "Rate A Guard",
-        description: "Guard Rating System",
-    };
+        redirect("/");
+    } catch (err) {
+        console.log(err);
+        redirect("/");
+    }
 }
 
 const Profile = async () => {
     const userData = await fetchUserData();
-    const { agency: { companyName } } = userData;
-
+    
     return (
         <TabsContent value="profile" className="focus: outline-none">
             <div className="mb-6 mt-10 flex items-center justify-end gap-4">
@@ -46,7 +49,7 @@ const Profile = async () => {
                 </div>
                 <div className="flex items-center">
                     <span className="w-96">Company Name</span>
-                    <div className="w-full">{companyName}</div>
+                    <div className="w-full">{userData?.agency.companyName}</div>
                 </div>
             </div>
         </TabsContent>

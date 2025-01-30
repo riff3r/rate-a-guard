@@ -1,38 +1,55 @@
 import { cookies } from "next/headers";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import Footer from "@/components/dashboard/footer/Footer";
 import Navbar from "@/components/dashboard/navbar/Navbar";
+import { apiClient } from "@/lib/apiClient";
 import "../../../globals.css";
-import { redirect } from "next/navigation";
+
+type IGuardProfileResponse = {
+    employee: {
+        firstName: string;
+        lastName: string;
+        agency: {
+            companyName: string;
+        };
+    };
+    overallRatings: number;
+    employeeRatingCount: number;
+    employeeRatings: {
+        review: number;
+        overallRating: number;
+    }[];
+    starCounts: {
+        [star: number]: number;
+    };
+};
 
 async function fetchGuardData(slug: string) {
-    const cookieStore = await cookies();
-    const sessionToken = cookieStore.get("sessionToken");
+    try {
+        const response = await apiClient<IGuardProfileResponse>({
+            url: `/api/employees/${slug}/profile`,
+            method: "GET",
+            requireAuth: true,
+        });
 
-    const response = await fetch(`${process.env.RATE_A_GUARD_BACKEND_BASE_URL}/api/employees/${slug}/profile`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${sessionToken?.value}` },
-    });
+        if (response.data) {
+            return response.data;
+        }
 
-    const data = await response.json();
-
-    return data.data;
+        redirect("/");
+    } catch (err) {
+        console.log(err);
+        redirect("/");
+    }
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
     const guardData = await fetchGuardData(slug);
-    const {
-        employee: {
-            firstName,
-            lastName,
-            agency: { companyName },
-        },
-    } = guardData;
-
     return {
-        title: `${firstName} ${lastName} at ${companyName}`,
-        description: `Give ratings and reviews for ${firstName} ${lastName}.`,
+        title: `${guardData?.employee.firstName} ${guardData?.employee.lastName} at ${guardData?.employee.agency.companyName}`,
+        description: `Give ratings and reviews for ${guardData?.employee.firstName} ${guardData?.employee.lastName}.`,
     };
 }
 
@@ -49,28 +66,21 @@ const RootLayout = async ({
 
     const { slug } = await params;
     const guardData = await fetchGuardData(slug);
-    const {
-        employee: {
-            firstName,
-            lastName,
-            agency: { companyName },
-        },
-    } = guardData;
-
+    
     return (
         <>
             <Navbar />
 
             <div className="sticky top-0 bg-white px-12 py-4 shadow-md">
                 <h1 className="font-poppins text-3xl font-extrabold">
-                    {firstName} {lastName}
+                    {guardData?.employee.firstName} {guardData?.employee.lastName}
                 </h1>
 
                 <h4 className="font-poppins text-xl mb-2">Add Rating</h4>
 
                 <p className="text-sm">
                     <span className="font-semibold">Guard at · </span>
-                    <span className="text-gray-500 underline">{companyName}</span>
+                    <span className="text-gray-500 underline">{guardData?.employee.agency.companyName}</span>
                 </p>
             </div>
 

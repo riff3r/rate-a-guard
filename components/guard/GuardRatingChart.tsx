@@ -1,5 +1,5 @@
 interface IProps {
-    starCounts: { [star: number]: number };
+    starCounts?: { [star: number]: number };
 }
 
 const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {

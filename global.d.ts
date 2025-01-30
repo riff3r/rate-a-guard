@@ -1,3 +1,14 @@
+interface Tokens {
+    access: {
+        token: string;
+        expires: number;
+    };
+    refresh: {
+        token: string;
+        expires: number;
+    };
+}
+
 interface IGuard {
     id: number;
     firstName: string;

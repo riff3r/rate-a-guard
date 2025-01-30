@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 
@@ -32,6 +33,7 @@ const RootLayout = ({
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}>
                 {children}
+                <Toaster position="top-right" />
             </body>
         </html>
     );

@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import NavbarLoginButton from "../auth/NavLoginButton";
 
 const handleLogout = async () => {
     "use server";
@@ -90,17 +91,7 @@ const HomeNavbar = async () => {
                             </DropdownMenu>
                         ) : (
                             <>
-                                <Button
-                                    size="sm"
-                                    variant={"ghost"}
-                                    className="font-semibold"
-                                    onClick={async () => {
-                                        "use server";
-                                        redirect("/login");
-                                    }}
-                                >
-                                    Login
-                                </Button>
+                                <NavbarLoginButton />
                                 <Button
                                     size="sm"
                                     className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"

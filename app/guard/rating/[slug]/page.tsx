@@ -1,11 +1,25 @@
 "use client";
 
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useRouter, useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import StarRating from "@/components/rating/StarRating";
 import Rehirable from "@/components/rating/Rehirable";
+import { genericClient } from "@/lib/genericClient";
+
+type ISearchGuardRequest = {
+    regularityRating: number;
+    professionalismRating: number;
+    productivityRating: number;
+    customerServiceRating: number;
+    communicationRating: number;
+    rehirable: string;
+    review: string;
+};
+
+type ISearchGuardResponse = Array<IGuard>;
 
 const Rating = () => {
     const searchParams = useParams();
@@ -27,19 +41,21 @@ const Rating = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`/guard/rating/${slug}/api`, {
+            const response = await genericClient<ISearchGuardRequest, ISearchGuardResponse>({
+                url: `/api/employee-ratings/${slug}`,
                 method: "POST",
-                body: JSON.stringify(formData),
-                headers: { "Content-Type": "application/json" },
+                data: formData,
+                requireAuth: true,
             });
 
-            if (response.ok) {
-                // const data = await response.json();
+            if (response.error) {
+                toast.error(response.error);
+                setErrorMessage(response.error || "Review submission failed. Please try again.");
+                return;
+            }
 
+            if (response.data) {
                 router.push(`/guard/rating/${slug}/success`);
-            } else {
-                const data = await response.json();
-                setErrorMessage(data.message || "Review submission failed. Please try again.");
             }
         } catch (error) {
             console.error(error);

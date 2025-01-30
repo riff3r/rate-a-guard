@@ -12,6 +12,7 @@ const handleLogout = async () => {
     const cookieStore = await cookies();
     cookieStore.delete("sessionToken");
     cookieStore.delete("sessionUser");
+    redirect("/");
 };
 
 const Navbar: React.FC = () => {

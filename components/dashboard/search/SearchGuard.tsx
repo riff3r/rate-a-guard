@@ -3,6 +3,14 @@
 import { useState, ChangeEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { genericClient } from "@/lib/genericClient";
+import toast from "react-hot-toast";
+
+type ISearchGuardRequest = {
+    text: string;
+};
+
+type ISearchGuardResponse = Array<IGuard>;
 
 const SearchGuard: React.FC = () => {
     const router = useRouter();
@@ -14,15 +22,22 @@ const SearchGuard: React.FC = () => {
         setText(value);
 
         if (value) {
-            const response = await fetch("/api/guard-search", {
-                method: "POST",
-                body: JSON.stringify({ text: value }),
-                headers: { "Content-Type": "application/json" },
+            const response = await genericClient<ISearchGuardRequest, ISearchGuardResponse>({
+                url: "/api/search/employees",
+                method: "GET",
+                params: { text: value },
+                requireAuth: true,
             });
 
-            const data = await response.json();
+            if (response.error) {
+                toast.error(response.error);
+                return;
+            }
 
-            setSuggestions(data.data);
+            if (response.data) {
+                setSuggestions(response.data);
+                return;
+            }
         } else {
             setSuggestions([]);
         }
