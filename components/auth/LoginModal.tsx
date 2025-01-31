@@ -26,7 +26,7 @@ interface ILoginResponse {
 
 const LoginModal: React.FC<IProps> = ({ isOpen, onClose }) => {
     const router = useRouter();
-    const { control, reset, handleSubmit } = useForm();
+    const { control, reset, handleSubmit } = useForm<ILoginRequest>();
     const [showPassword, setShowPassword] = useState(false);
 
     if (!isOpen) return null;
@@ -78,7 +78,7 @@ const LoginModal: React.FC<IProps> = ({ isOpen, onClose }) => {
                                 {...field}
                                 type="email"
                                 placeholder="Email"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="h-10 w-full border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                                 required
                             />
                         )}
@@ -93,7 +93,7 @@ const LoginModal: React.FC<IProps> = ({ isOpen, onClose }) => {
                                     {...field}
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Password"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="h-10 w-full border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                                     required
                                 />
                             )}

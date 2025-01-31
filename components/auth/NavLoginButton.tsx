@@ -12,7 +12,7 @@ const NavbarLoginButton = () => {
             <Button
                 size="sm"
                 variant={"ghost"}
-                className="font-semibold"
+                className="font-semibold bg-white"
                 onClick={() => { setShowLoginModal(true) }}
             >
                 Login

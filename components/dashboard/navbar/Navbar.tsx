@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 // import Search from "@/components/ui/search";
 import SearchGuard from "../search/SearchGuard";
+import NavbarLoginButton from "@/components/auth/NavLoginButton";
+import { Button } from "@/components/ui/button";
 
 const handleLogout = async () => {
     "use server";
@@ -15,7 +17,10 @@ const handleLogout = async () => {
     redirect("/");
 };
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC = async () => {
+    const cookieStore = await cookies();
+    const sessionToken = cookieStore.get("sessionToken");
+
     return (
         <div className="bg-foreground px-6 py-3">
             <div className="container mx-auto">
@@ -33,61 +38,81 @@ const Navbar: React.FC = () => {
                         </div>
 
                         {/* <Search /> */}
-                        <SearchGuard />
+                        {sessionToken?.value && <SearchGuard />}
                     </div>
 
                     <div className="flex items-center gap-4">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger className="flex p-1 px-3 items-center text-white rounded-full font-semibold select-none bg-foreground hover:bg-neutral-700 focus: outline-none">
-                                Hey, User
-                            </DropdownMenuTrigger>
+                        {sessionToken?.value ? (
+                            <DropdownMenu>
+                                <DropdownMenuTrigger className="flex p-1 px-3 items-center text-white rounded-full font-semibold text-sm select-none bg-foreground hover:bg-neutral-700 focus: outline-none">
+                                    Hey, User
+                                </DropdownMenuTrigger>
 
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuItem
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuItem
+                                        onClick={async () => {
+                                            "use server";
+
+                                            redirect("/account/profile");
+                                        }}
+                                        className="focus:bg-primary focus:text-white"
+                                    >
+                                        Profile
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                        onClick={async () => {
+                                            "use server";
+
+                                            redirect("/account/profile");
+                                        }}
+                                        className="focus:bg-primary focus:text-white"
+                                    >
+                                        Account Settings
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                        onClick={async () => {
+                                            "use server";
+
+                                            redirect("/account/profile");
+                                        }}
+                                        className="focus:bg-primary focus:text-white"
+                                    >
+                                        Your Ratings
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                        onClick={async () => {
+                                            "use server";
+
+                                            redirect("/account/profile");
+                                        }}
+                                        className="focus:bg-primary focus:text-white"
+                                    >
+                                        Saved Guards
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                        onClick={handleLogout}
+                                        className="focus:bg-primary focus:text-white"
+                                    >
+                                        Logout
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        ) : (
+                            <>
+                                <NavbarLoginButton />
+                                <Button
+                                    size="sm"
+                                    className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
                                     onClick={async () => {
                                         "use server";
 
-                                        redirect("/account/profile");
+                                        redirect("/register/company");
                                     }}
-                                    className="focus:bg-primary focus:text-white"
                                 >
-                                    Profile
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    onClick={async () => {
-                                        "use server";
-
-                                        redirect("/account/profile");
-                                    }}
-                                    className="focus:bg-primary focus:text-white"
-                                >
-                                    Account Settings
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    onClick={async () => {
-                                        "use server";
-
-                                        redirect("/account/profile");
-                                    }}
-                                    className="focus:bg-primary focus:text-white"
-                                >
-                                    Your Ratings
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    onClick={async () => {
-                                        "use server";
-
-                                        redirect("/account/profile");
-                                    }}
-                                    className="focus:bg-primary focus:text-white"
-                                >
-                                    Saved Guards
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={handleLogout} className="focus:bg-primary focus:text-white">
-                                    Logout
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                                    Register
+                                </Button>
+                            </>
+                        )}
 
                         {/* <Button className="rounded-full bg-white font-semibold text-black select-none	hover:bg-neutral-700 hover:text-white h-8">
                             Help

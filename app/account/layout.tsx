@@ -27,8 +27,7 @@ export default function RootLayout({
 
                         <Button
                             size="sm"
-                            variant={"default"}
-                            className="font-semibold"
+                            className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
                             onClick={async () => {
                                 "use server";
                                 redirect("/register/guard");

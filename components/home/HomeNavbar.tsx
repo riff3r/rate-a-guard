@@ -1,3 +1,4 @@
+import React from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Button } from "../ui/button";
@@ -12,7 +13,7 @@ const handleLogout = async () => {
     cookieStore.delete("sessionUser");
 };
 
-const HomeNavbar = async () => {
+const HomeNavbar: React.FC = async () => {
     const cookieStore = await cookies();
     const sessionToken = cookieStore.get("sessionToken");
 
