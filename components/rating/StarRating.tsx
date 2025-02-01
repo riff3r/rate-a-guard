@@ -24,7 +24,7 @@ const StarRating: React.FC<IProps> = ({ initialRating = 0, onChange }) => {
                     key={index}
                     onClick={() => handleToggle(index)}
                     className={`w-10 h-10 ms-3 cursor-pointer ${
-                        index < rating ? "text-yellow-300" : "text-gray-300 dark:text-gray-500"
+                        index < rating ? "text-gray-500" : "text-gray-300 dark:text-gray-500"
                     }`}
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"

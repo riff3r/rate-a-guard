@@ -16,3 +16,10 @@ interface IGuard {
     licenseNumber: string;
     state: string;
 }
+
+interface IAgency {
+    id: number;
+    companyName: string;
+    licenseNumber: string;
+    state: string;
+}

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import NavbarLoginButton from "../auth/NavLoginButton";
+import SearchCompany from "../dashboard/search/SearchCompany";
 
 const handleLogout = async () => {
     "use server";
@@ -21,7 +22,7 @@ const HomeNavbar: React.FC = async () => {
         <div className="bg-white shadow-sm px-6 py-3">
             <div className="container mx-auto">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-6 sm:w-2/5 w-2/3">
                         <div
                             className="logo bg-black px-6 py-1 text-center text-lg font-semibold text-white cursor-default"
                             onClick={async () => {
@@ -32,6 +33,7 @@ const HomeNavbar: React.FC = async () => {
                         >
                             RAG
                         </div>
+                        {!sessionToken?.value && <SearchCompany />}
                     </div>
 
                     <div className="flex items-center gap-4">

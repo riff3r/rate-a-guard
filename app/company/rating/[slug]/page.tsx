@@ -9,29 +9,29 @@ import StarRating from "@/components/rating/StarRating";
 import Rehirable from "@/components/rating/Rehirable";
 import { genericClient } from "@/lib/genericClient";
 
-type ISearchGuardRequest = {
-    regularityRating: number;
-    professionalismRating: number;
-    productivityRating: number;
-    customerServiceRating: number;
-    communicationRating: number;
-    rehirable: string;
+type ISearchAgencyRequest = {
+    benefitsRating: number;
+    cultureRating: number;
+    managementRating: number;
+    payRating: number;
+    growthRating: number;
+    rejoinable: string;
     review: string;
 };
 
-type ISearchGuardResponse = Array<IGuard>;
+type ISearchAgencyResponse = Array<IGuard>;
 
 const Rating = () => {
     const searchParams = useParams();
     const slug = searchParams.slug;
     const router = useRouter();
     const [formData, setFormData] = useState({
-        regularityRating: 0,
-        professionalismRating: 0,
-        productivityRating: 0,
-        customerServiceRating: 0,
-        communicationRating: 0,
-        rehirable: "",
+        benefitsRating: 0,
+        cultureRating: 0,
+        managementRating: 0,
+        payRating: 0,
+        growthRating: 0,
+        rejoinable: "",
         review: "",
     });
 
@@ -41,8 +41,8 @@ const Rating = () => {
         event.preventDefault();
 
         try {
-            const response = await genericClient<ISearchGuardRequest, ISearchGuardResponse>({
-                url: `/api/employee-ratings/${slug}`,
+            const response = await genericClient<ISearchAgencyRequest, ISearchAgencyResponse>({
+                url: `/api/agency-ratings/${slug}`,
                 method: "POST",
                 data: formData,
                 requireAuth: true,
@@ -55,7 +55,7 @@ const Rating = () => {
             }
 
             if (response.data) {
-                router.push(`/guard/rating/${slug}/success`);
+                router.push(`/company/rating/${slug}/success`);
             }
         } catch (error) {
             console.error(error);
@@ -69,14 +69,14 @@ const Rating = () => {
             <form onSubmit={handleSubmit}>
                 <div className="border rounded-md shadow-md px-8 py-6">
                     <h2 className="text-md font-bold mb-5">
-                        Attendance / Punctuality <span className="text-red-500">*</span>
+                        Benefits <span className="text-red-500">*</span>
                     </h2>
 
                     <div className="flex justify-center">
                         <StarRating
-                            initialRating={formData.regularityRating}
+                            initialRating={formData.benefitsRating}
                             onChange={(rating: number) => {
-                                setFormData((prevState) => ({ ...prevState, regularityRating: rating }));
+                                setFormData((prevState) => ({ ...prevState, benefitsRating: rating }));
                             }}
                         />
                     </div>
@@ -84,14 +84,14 @@ const Rating = () => {
 
                 <div className="border rounded-md shadow-md px-8 py-6">
                     <h2 className="text-md font-bold mb-5">
-                        Professionalism <span className="text-red-500">*</span>
+                        Culture <span className="text-red-500">*</span>
                     </h2>
 
                     <div className="flex justify-center">
                         <StarRating
-                            initialRating={formData.professionalismRating}
+                            initialRating={formData.cultureRating}
                             onChange={(rating: number) => {
-                                setFormData((prevState) => ({ ...prevState, professionalismRating: rating }));
+                                setFormData((prevState) => ({ ...prevState, cultureRating: rating }));
                             }}
                         />
                     </div>
@@ -99,14 +99,14 @@ const Rating = () => {
 
                 <div className="border rounded-md shadow-md px-8 py-6">
                     <h2 className="text-md font-bold mb-5">
-                        Productivity <span className="text-red-500">*</span>
+                        Management <span className="text-red-500">*</span>
                     </h2>
 
                     <div className="flex justify-center">
                         <StarRating
-                            initialRating={formData.productivityRating}
+                            initialRating={formData.managementRating}
                             onChange={(rating: number) => {
-                                setFormData((prevState) => ({ ...prevState, productivityRating: rating }));
+                                setFormData((prevState) => ({ ...prevState, managementRating: rating }));
                             }}
                         />
                     </div>
@@ -114,14 +114,14 @@ const Rating = () => {
 
                 <div className="border rounded-md shadow-md px-8 py-6">
                     <h2 className="text-md font-bold mb-5">
-                        Customer Service <span className="text-red-500">*</span>
+                        Pay <span className="text-red-500">*</span>
                     </h2>
 
                     <div className="flex justify-center">
                         <StarRating
-                            initialRating={formData.customerServiceRating}
+                            initialRating={formData.payRating}
                             onChange={(rating: number) => {
-                                setFormData((prevState) => ({ ...prevState, customerServiceRating: rating }));
+                                setFormData((prevState) => ({ ...prevState, payRating: rating }));
                             }}
                         />
                     </div>
@@ -129,14 +129,14 @@ const Rating = () => {
 
                 <div className="border rounded-md shadow-md px-8 py-6">
                     <h2 className="text-md font-bold mb-5">
-                        Communication <span className="text-red-500">*</span>
+                        Growth <span className="text-red-500">*</span>
                     </h2>
 
                     <div className="flex justify-center">
                         <StarRating
-                            initialRating={formData.communicationRating}
+                            initialRating={formData.growthRating}
                             onChange={(rating: number) => {
-                                setFormData((prevState) => ({ ...prevState, communicationRating: rating }));
+                                setFormData((prevState) => ({ ...prevState, growthRating: rating }));
                             }}
                         />
                     </div>
@@ -144,14 +144,14 @@ const Rating = () => {
 
                 <div className="border rounded-md shadow-md px-8 py-6">
                     <h2 className="text-md font-bold mb-5">
-                        Rehirable <span className="text-red-500">*</span>
+                        Rejoinable <span className="text-red-500">*</span>
                     </h2>
 
                     <div className="flex justify-center">
                         <Rehirable
-                            defaultChecked={formData.rehirable}
+                            defaultChecked={formData.rejoinable}
                             onChange={(state: string) => {
-                                setFormData((prevState) => ({ ...prevState, rehirable: state }));
+                                setFormData((prevState) => ({ ...prevState, rejoinable: state }));
                             }}
                         />
                     </div>

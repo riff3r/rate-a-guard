@@ -1,5 +1,5 @@
 interface IProps {
-    starCounts?: { [star: number]: number };
+    starCounts: { [star: number]: number };
 }
 
 const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
@@ -12,7 +12,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                         {Array.from({ length: 5 }, (_, index) => (
                             <svg
                                 key={index}
-                                className={`w-5 h-5 ms-1 ${index < 5 ? "text-yellow-500" : "text-gray-300 dark:text-gray-500"}`}
+                                className={`w-5 h-5 ms-1 ${index < 5 ? "text-gray-500" : "text-gray-300 dark:text-gray-500"}`}
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor"
@@ -24,7 +24,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                     </div>
                     <div className="w-72 flex-1 h-4 bg-gray-300 rounded-md relative">
                         <div
-                            className="absolute top-0 left-0 h-4 bg-blue-500 rounded-md"
+                            className="absolute top-0 left-0 h-4 bg-gray-600 rounded-md"
                             style={{ width: "75%" }}
                         ></div>
                     </div>
@@ -36,7 +36,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                         {Array.from({ length: 5 }, (_, index) => (
                             <svg
                                 key={index}
-                                className={`w-5 h-5 ms-1 ${index < 4 ? "text-yellow-500" : "text-gray-300 dark:text-gray-500"}`}
+                                className={`w-5 h-5 ms-1 ${index < 4 ? "text-gray-500" : "text-gray-300 dark:text-gray-500"}`}
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor"
@@ -48,7 +48,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                     </div>
                     <div className="w-72 flex-1 h-4 bg-gray-300 rounded-md relative">
                         <div
-                            className="absolute top-0 left-0 h-4 bg-blue-500 rounded-md"
+                            className="absolute top-0 left-0 h-4 bg-gray-600 rounded-md"
                             style={{ width: "75%" }}
                         ></div>
                     </div>
@@ -60,7 +60,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                         {Array.from({ length: 5 }, (_, index) => (
                             <svg
                                 key={index}
-                                className={`w-5 h-5 ms-1 ${index < 3 ? "text-yellow-500" : "text-gray-300 dark:text-gray-500"}`}
+                                className={`w-5 h-5 ms-1 ${index < 3 ? "text-gray-500" : "text-gray-300 dark:text-gray-500"}`}
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor"
@@ -72,7 +72,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                     </div>
                     <div className="w-72 flex-1 h-4 bg-gray-300 rounded-md relative">
                         <div
-                            className="absolute top-0 left-0 h-4 bg-blue-500 rounded-md"
+                            className="absolute top-0 left-0 h-4 bg-gray-600 rounded-md"
                             style={{ width: "75%" }}
                         ></div>
                     </div>
@@ -84,7 +84,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                         {Array.from({ length: 5 }, (_, index) => (
                             <svg
                                 key={index}
-                                className={`w-5 h-5 ms-1 ${index < 2 ? "text-yellow-500" : "text-gray-300 dark:text-gray-500"}`}
+                                className={`w-5 h-5 ms-1 ${index < 2 ? "text-gray-500" : "text-gray-300 dark:text-gray-500"}`}
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor"
@@ -96,7 +96,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                     </div>
                     <div className="w-72 flex-1 h-4 bg-gray-300 rounded-md relative">
                         <div
-                            className="absolute top-0 left-0 h-4 bg-blue-500 rounded-md"
+                            className="absolute top-0 left-0 h-4 bg-gray-600 rounded-md"
                             style={{ width: "75%" }}
                         ></div>
                     </div>
@@ -108,7 +108,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                         {Array.from({ length: 5 }, (_, index) => (
                             <svg
                                 key={index}
-                                className={`w-5 h-5 ms-1 ${index < 1 ? "text-yellow-500" : "text-gray-300 dark:text-gray-500"}`}
+                                className={`w-5 h-5 ms-1 ${index < 1 ? "text-gray-500" : "text-gray-300 dark:text-gray-500"}`}
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor"
@@ -120,7 +120,7 @@ const GuardRatingChart: React.FC<IProps> = ({ starCounts }) => {
                     </div>
                     <div className="w-72 flex-1 h-4 bg-gray-300 rounded-md relative">
                         <div
-                            className="absolute top-0 left-0 h-4 bg-blue-500 rounded-md"
+                            className="absolute top-0 left-0 h-4 bg-gray-600 rounded-md"
                             style={{ width: "75%" }}
                         ></div>
                     </div>

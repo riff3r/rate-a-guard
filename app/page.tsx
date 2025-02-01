@@ -3,6 +3,7 @@ import HomeNavbar from "@/components/home/HomeNavbar";
 import SearchGuard from "@/components/dashboard/search/SearchGuard";
 import { Button } from "@/components/ui/button";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const Home = async () => {
     const cookieStore = await cookies();
@@ -35,7 +36,14 @@ const Home = async () => {
                             <SearchGuard />
                         ) : (
                             <div className="flex justify-center gap-4">
-                                <Button className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none">
+                                <Button
+                                    className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
+                                    onClick={async () => {
+                                        "use server";
+
+                                        redirect("/register/company");
+                                    }}
+                                >
                                     Register Now
                                 </Button>
                                 <Button variant={"outline"} className="rounded-full font-semibold focus: outline-none">

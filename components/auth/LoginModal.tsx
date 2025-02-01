@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { genericClient } from "@/lib/genericClient";
+import Link from "next/link";
 
 interface IProps {
     isOpen: boolean;
@@ -107,9 +108,9 @@ const LoginModal: React.FC<IProps> = ({ isOpen, onClose }) => {
                         </button>
                     </div>
 
-                    <a href="#" className="text-sm text-blue-500 hover:underline">
+                    <Link href="/password/reset" className="text-sm text-blue-500 hover:underline">
                         Forgot Password?
-                    </a>
+                    </Link>
 
                     <button type="submit" className="w-full py-2 bg-black text-white rounded-full hover:bg-gray-800">
                         Continue

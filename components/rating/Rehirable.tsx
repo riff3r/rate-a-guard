@@ -26,7 +26,7 @@ const Rehirable: React.FC<IProps> = ({ defaultChecked = "", onChange }) => {
                     value="1"
                     checked={selected === "yes"}
                     onChange={() => handleChange("yes")}
-                    className="w-8 h-8 text-blue-600 bg-gray-100 border-gray-300 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-8 h-8 text-blue-600 accent-black bg-gray-100 border-gray-300 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
                     htmlFor="rehirable-radio-yes"
@@ -42,7 +42,7 @@ const Rehirable: React.FC<IProps> = ({ defaultChecked = "", onChange }) => {
                     value="0"
                     checked={selected === "no"}
                     onChange={() => handleChange("no")}
-                    className="w-8 h-8 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-8 h-8 text-blue-600 accent-black bg-gray-100 border-gray-300 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
                     htmlFor="rehirable-radio-no"

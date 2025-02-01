@@ -5,6 +5,21 @@ import { genericClient } from "@/lib/genericClient";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 
+interface IAgencyRegisterRequest {
+    address: string;
+    city: string;
+    companyName: string;
+    emailAddress: string;
+    licenseExpirationDate: string;
+    licenseNumber: string;
+    licenseType: string;
+    phoneNumber: string;
+    registeredAgentName: string;
+    country: string;
+    state: string;
+    zip: string;
+}
+
 const Page = () => {
     const steps: FormWizardStepProps[] = [
         {
@@ -111,21 +126,6 @@ const Page = () => {
     ];
 
     const defaultValues = {};
-
-    interface IAgencyRegisterRequest {
-        address: string;
-        city: string;
-        companyName: string;
-        emailAddress: string;
-        licenseExpirationDate: string;
-        licenseNumber: string;
-        licenseType: string;
-        phoneNumber: string;
-        registeredAgentName: string;
-        country: string;
-        state: string;
-        zip: string;
-    }
 
     const handleSubmit = async (values: IAgencyRegisterRequest) => {
         const response = await genericClient<IAgencyRegisterRequest, unknown>({

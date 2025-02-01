@@ -1,204 +1,168 @@
 "use client";
 
-import { BasicInput } from "@/components/ui/basic-input";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import StarRating from "@/components/rating/StarRating"; // Import for rating
+import FormWizard, { FormWizardStepProps } from "@/components/ui/form-wizard";
+import { genericClient } from "@/lib/genericClient";
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
-interface FormData {
-    name: string;
-    licenseType: string;
-    expirationDate: string;
-    primaryStatus: string;
-    addressOfRecord: string;
+interface IEmployeeRegisterRequest {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    emailAddress: string;
+    licenseNumber?: string;
+    licenseType?: string;
+    licenseExpirationDate?: string;
+    address: string;
     city: string;
     state: string;
+    country: string;
     zip: string;
-    attendance: number;
-    professionalism: number;
-    productivity: number;
-    customerService: number;
-    communication: number;
-    rehirable: string;
-    review: string;
+}
+
+interface IEmployeeRegisterResponse {
+    id: number;
 }
 
 const Page = () => {
-    const form = useForm<FormData>({
-        defaultValues: {
-            name: "",
-            licenseType: "",
-            expirationDate: "",
-            primaryStatus: "",
-            addressOfRecord: "",
-            city: "",
-            state: "",
-            zip: "",
-            attendance: 0,
-            professionalism: 0,
-            productivity: 0,
-            customerService: 0,
-            communication: 0,
-            rehirable: "",
-            review: "",
+    const steps: FormWizardStepProps[] = [
+        {
+            id: "STEP_1",
+            legend: "Guard Information",
+            fields: [
+                {
+                    label: "First Name",
+                    type: "text",
+                    name: "firstName",
+                    placeholder: "Type a guard's first name",
+                    rules: { required: "Guard first name is required." },
+                },
+                {
+                    label: "Last Name",
+                    type: "text",
+                    name: "lastName",
+                    placeholder: "Type a guard's last name",
+                    rules: { required: "Guard last name is required." },
+                },
+                {
+                    label: "Email Address",
+                    type: "email",
+                    name: "emailAddress",
+                    placeholder: "Type a valid email address",
+                    rules: { required: "Email address is required." },
+                },
+                {
+                    label: "Phone Number",
+                    type: "text",
+                    name: "phoneNumber",
+                    placeholder: "Type a valid phone number",
+                    rules: { required: "Phone number is required." },
+                },
+            ],
         },
-        mode: "onSubmit",
-    });
+        {
+            id: "STEP_2",
+            legend: "License Information",
+            fields: [
+                {
+                    label: "License Number",
+                    type: "text",
+                    name: "licenseNumber",
+                    placeholder: "Type a valid license number",
+                    rules: { required: "License number is required." },
+                },
+                {
+                    label: "License Type",
+                    type: "text",
+                    name: "licenseType",
+                    placeholder: "Type license type",
+                    rules: { required: "License type is required." },
+                },
+                {
+                    label: "Expiration Date",
+                    type: "date",
+                    name: "licenseExpirationDate",
+                    rules: { required: "Expiration date is required." },
+                },
+            ],
+        },
+        {
+            id: "STEP_3",
+            legend: "Address Information",
+            fields: [
+                {
+                    label: "Address",
+                    type: "text",
+                    name: "address",
+                    placeholder: "Type Address",
+                    rules: { required: "Address is required." },
+                },
+                {
+                    label: "City",
+                    type: "text",
+                    name: "city",
+                    placeholder: "Type city",
+                    rules: { required: "City is required." },
+                },
+                {
+                    label: "State",
+                    type: "text",
+                    name: "state",
+                    placeholder: "Type state",
+                    rules: { required: "State is required." },
+                },
+                {
+                    label: "Country",
+                    type: "text",
+                    name: "country",
+                    placeholder: "Type country",
+                    rules: { required: "Country is required." },
+                },
+                {
+                    label: "Zip",
+                    type: "text",
+                    name: "zip",
+                    placeholder: "Type zip code",
+                    rules: { required: "Zip code is required." },
+                },
+            ],
+        },
+    ];
 
-    const onSubmit = (data: FormData) => {
-        console.log(data);
+    const defaultValues = {};
+
+    const handleSubmit = async (values: IEmployeeRegisterRequest) => {
+        const response = await genericClient<IEmployeeRegisterRequest, IEmployeeRegisterResponse>({
+            url: "/api/employees",
+            method: "POST",
+            data: values,
+            requireAuth: true,
+        });
+
+        if (response.error) {
+            toast.error(response.error);
+            return;
+        }
+
+        if (response.data) {
+            toast.success("Guard added successfully");
+            redirect(`/guard/rating/${response.data.id}`);
+            return;
+        }
+
+        toast.error("Something went wrong! Try again later.");
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-16 px-4 flex flex-col items-center">
+        <div className="bg-gray-50 pt-8 pb-4 px-4 flex flex-col items-center">
             <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-md">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">Guard Licensing Details</h1>
+                <h1 className="text-3xl text-center font-bold text-gray-800 mb-6">Guard Registration</h1>
 
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                        {/* Guard Licensing Details */}
-                        <fieldset className="space-y-4">
-                            <legend className="text-xl font-semibold text-gray-800">Guard Licensing Details</legend>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {[
-                                    { name: "name", label: "Name" },
-                                    { name: "licenseType", label: "License Type" },
-                                    { name: "expirationDate", label: "Expiration Date", type: "date" },
-                                    { name: "primaryStatus", label: "Primary Status" },
-                                ].map(({ name, label, type }) => (
-                                    <FormField
-                                        key={name}
-                                        control={form.control}
-                                        name={name as keyof FormData}
-                                        rules={{ required: `${label} is required.` }}
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>{label}</FormLabel>
-                                                <FormControl>
-                                                    <BasicInput placeholder={label} type={type || "text"} {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                ))}
-                            </div>
-                        </fieldset>
-
-                        {/* Address */}
-                        <fieldset className="space-y-4">
-                            <legend className="text-xl font-semibold text-gray-800">Address</legend>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {[
-                                    { name: "addressOfRecord", label: "Address of Record" },
-                                    { name: "city", label: "City" },
-                                    { name: "state", label: "State" },
-                                    { name: "zip", label: "Zip" },
-                                ].map(({ name, label }) => (
-                                    <FormField
-                                        key={name}
-                                        control={form.control}
-                                        name={name as keyof FormData}
-                                        rules={{ required: `${label} is required.` }}
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>{label}</FormLabel>
-                                                <FormControl>
-                                                    <BasicInput placeholder={label} {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                ))}
-                            </div>
-                        </fieldset>
-
-                        {/* Rating Categories */}
-                        <fieldset className="space-y-4">
-                            <legend className="text-xl font-semibold text-gray-800">
-                                Rating Categories (5-star system)
-                            </legend>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {[
-                                    { name: "attendance", label: "Attendance/Punctuality" },
-                                    { name: "professionalism", label: "Professionalism" },
-                                    { name: "productivity", label: "Productivity" },
-                                    { name: "customerService", label: "Customer Service" },
-                                    { name: "communication", label: "Communication" },
-                                ].map(({ name, label }) => (
-                                    <FormField
-                                        key={name}
-                                        control={form.control}
-                                        name={name as keyof FormData}
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>{label}</FormLabel>
-                                                <FormControl>
-                                                    <StarRating
-                                                        value={field.value}
-                                                        onChange={(value) => field.onChange(value)}
-                                                    />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
-                                ))}
-                            </div>
-                        </fieldset>
-
-                        {/* Re-hirable */}
-                        <fieldset className="space-y-4">
-                            <legend className="text-xl font-semibold text-gray-800">Re-hirable</legend>
-                            <FormField
-                                control={form.control}
-                                name="rehirable"
-                                rules={{ required: "Re-hirable is required." }}
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Re-hirable</FormLabel>
-                                        <FormControl>
-                                            <select className="w-full p-2 border rounded-lg" {...field}>
-                                                <option value="">Select</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                            </select>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </fieldset>
-
-                        {/* Review */}
-                        <fieldset className="space-y-4">
-                            <legend className="text-xl font-semibold text-gray-800">Review</legend>
-                            <FormField
-                                control={form.control}
-                                name="review"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Comments</FormLabel>
-                                        <FormControl>
-                                            <textarea
-                                                className="w-full p-2 border rounded-lg"
-                                                placeholder="Enter your comments"
-                                                rows={4}
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </fieldset>
-
-                        <Button type="submit" className="w-full py-3">
-                            Submit for Review
-                        </Button>
-                    </form>
-                </Form>
+                <FormWizard
+                    steps={steps}
+                    defaultValues={defaultValues}
+                    onSubmit={(values) => handleSubmit(values as unknown as IEmployeeRegisterRequest)}
+                />
             </div>
 
             <footer className="mt-8 text-center text-gray-600">
