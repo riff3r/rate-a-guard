@@ -26,11 +26,21 @@ type IGuardProfileResponse = {
 };
 
 async function fetchGuardData(slug: string) {
+    const cookieStore = await cookies();
+    const selectedAgency = cookieStore.get("selectedAgency");
+    const sessionUserAgency = cookieStore.get("sessionUserAgency");
     try {
+        let agencyId = null;
+
+        if (selectedAgency?.value) {
+            agencyId = JSON.parse(selectedAgency?.value).id;
+        } else if (sessionUserAgency?.value) {
+            agencyId = JSON.parse(sessionUserAgency?.value).id;
+        }
+
         const response = await apiClient<IGuardProfileResponse>({
-            url: `/api/employees/${slug}/profile`,
+            url: `/api/employees/${agencyId}/${slug}/profile`,
             method: "GET",
-            requireAuth: true,
         });
 
         if (response.data) {
@@ -66,7 +76,7 @@ const RootLayout = async ({
 
     const { slug } = await params;
     const guardData = await fetchGuardData(slug);
-    
+
     return (
         <>
             <Navbar />
