@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import NavbarLoginButton from "../auth/NavLoginButton";
-import SearchCompany from "../dashboard/search/SearchCompany";
 
 const handleLogout = async () => {
     "use server";
@@ -12,6 +11,8 @@ const handleLogout = async () => {
     const cookieStore = await cookies();
     cookieStore.delete("sessionToken");
     cookieStore.delete("sessionUser");
+    cookieStore.delete("sessionUserAgency");
+    cookieStore.delete("selectedAgency");
 };
 
 const HomeNavbar: React.FC = async () => {

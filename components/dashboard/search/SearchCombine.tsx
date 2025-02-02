@@ -48,6 +48,8 @@ const SearchCombine: React.FC<IProps> = ({ textColorDark = false }) => {
             setSelectedCompany(JSON.parse(selectedAgency));
         } else if (sessionUserAgency) {
             setSelectedCompany(JSON.parse(sessionUserAgency));
+        }else{
+            setIsSearchingGuard(false);
         }
     }, []);
     
@@ -117,9 +119,9 @@ const SearchCombine: React.FC<IProps> = ({ textColorDark = false }) => {
         <>
             <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center text-white select-none hidden sm:flex focus: outline-none">
-                    {isSearchingGuard ? <User size={20} /> : <Building2 size={20} />}{" "}
-                    <div className="ml-1 mr-2">{isSearchingGuard ? "Guard" : "Company"}</div>
-                    <ChevronDown size={20} strokeWidth={3} />
+                    {isSearchingGuard ? <User className={`cursor-pointer ${textColorDark ? "stroke-gray-600" : "stroke-white"}`} size={20} /> : <Building2 className={`cursor-pointer ${textColorDark ? "stroke-gray-600" : "stroke-white"}`} size={20} />}{" "}
+                    <div className={`ml-1 mr-2 ${textColorDark ? "text-gray-600" : "text-white"}`}>{isSearchingGuard ? "Guard" : "Company"}</div>
+                    <ChevronDown className={`cursor-pointer ${textColorDark ? "stroke-gray-600" : "stroke-white"}`} size={20} strokeWidth={3} />
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent onClick={() => setIsSearchingGuard(!isSearchingGuard)}>
@@ -230,7 +232,7 @@ const SearchCombine: React.FC<IProps> = ({ textColorDark = false }) => {
                     )}
                 </div>
             ) : (
-                <div className="relative w-full mx-auto">
+                <div className="relative w-full mx-auto max-w-[450px]">
                     <Input
                         type="text"
                         className="max-w-[450px]"

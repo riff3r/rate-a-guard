@@ -12,6 +12,8 @@ const handleLogout = async () => {
     const cookieStore = await cookies();
     cookieStore.delete("sessionToken");
     cookieStore.delete("sessionUser");
+    cookieStore.delete("sessionUserAgency");
+    cookieStore.delete("selectedAgency");
     redirect("/");
 };
 

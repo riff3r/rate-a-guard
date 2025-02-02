@@ -7,9 +7,7 @@ const Home = async () => {
         <>
             <HomeNavbar />
 
-            <div
-                className={`h-[calc(100vh-136px)] overflow-y-auto`}
-            >
+            <div className={`h-[calc(100vh-136px)] overflow-y-auto`}>
                 <section className="bg-gray-50 py-16 px-4 text-center relative">
                     <div
                         className="absolute inset-0 bg-black opacity-40 h-full w-full z-1 blur-sm bg-cover bg-center"
@@ -46,7 +44,9 @@ const Home = async () => {
                             </div>
                         )} */}
 
-                        <SearchCombine textColorDark={true} />
+                        <div className="flex justify-center">
+                            <SearchCombine textColorDark={true} />
+                        </div>
                     </div>
                 </section>
 
