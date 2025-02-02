@@ -21,6 +21,7 @@ interface ILoginRequest {
 interface ILoginResponse {
     tokens: Tokens;
     user: unknown;
+    agency: unknown;
     error?: string;
     details?: object;
 }
@@ -49,6 +50,7 @@ const LoginModal: React.FC<IProps> = ({ isOpen, onClose }) => {
             onClose();
             Cookies.set("sessionToken", JSON.stringify(response.data.tokens));
             Cookies.set("sessionUser", JSON.stringify(response.data.user));
+            Cookies.set("sessionUserAgency", JSON.stringify(response.data.agency));
             router.refresh();
             return;
         }

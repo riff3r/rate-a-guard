@@ -1,19 +1,15 @@
 import Footer from "@/components/dashboard/footer/Footer";
 import HomeNavbar from "@/components/home/HomeNavbar";
-import SearchGuard from "@/components/dashboard/search/SearchGuard";
-import { Button } from "@/components/ui/button";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import SearchCombine from "@/components/dashboard/search/SearchCombine";
 
 const Home = async () => {
-    const cookieStore = await cookies();
-    const sessionToken = cookieStore.get("sessionToken");
-
     return (
         <>
             <HomeNavbar />
 
-            <div className="h-[calc(100vh-136px)] overflow-y-auto">
+            <div
+                className={`h-[calc(100vh-136px)] overflow-y-auto`}
+            >
                 <section className="bg-gray-50 py-16 px-4 text-center relative">
                     <div
                         className="absolute inset-0 bg-black opacity-40 h-full w-full z-1 blur-sm bg-cover bg-center"
@@ -32,9 +28,7 @@ const Home = async () => {
                             security companies. Join us in creating a more transparent and efficient security workforce.
                         </p>
 
-                        {sessionToken?.value ? (
-                            <SearchGuard />
-                        ) : (
+                        {/* {!sessionToken?.value && (
                             <div className="flex justify-center gap-4">
                                 <Button
                                     className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
@@ -50,7 +44,9 @@ const Home = async () => {
                                     Learn More
                                 </Button>
                             </div>
-                        )}
+                        )} */}
+
+                        <SearchCombine textColorDark={true} />
                     </div>
                 </section>
 

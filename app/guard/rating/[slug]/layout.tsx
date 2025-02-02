@@ -61,7 +61,7 @@ const RootLayout = async ({
     const sessionToken = cookieStore.get("sessionToken");
 
     if (!sessionToken?.value) {
-        redirect("/login");
+        redirect("/?action=login");
     }
 
     const { slug } = await params;
