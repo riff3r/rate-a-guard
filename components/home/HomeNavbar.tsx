@@ -11,8 +11,8 @@ const handleLogout = async () => {
     const cookieStore = await cookies();
     cookieStore.delete("sessionToken");
     cookieStore.delete("sessionUser");
-    cookieStore.delete("sessionUserAgency");
-    cookieStore.delete("selectedAgency");
+    cookieStore.delete("sessionUserCompany");
+    cookieStore.delete("selectedCompany");
 };
 
 const HomeNavbar: React.FC = async () => {

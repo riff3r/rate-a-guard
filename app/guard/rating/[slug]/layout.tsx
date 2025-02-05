@@ -7,16 +7,16 @@ import { apiClient } from "@/lib/apiClient";
 import "../../../globals.css";
 
 type IGuardProfileResponse = {
-    employee: {
+    guard: {
         firstName: string;
         lastName: string;
-        agency: {
+        company: {
             companyName: string;
         };
     };
     overallRatings: number;
-    employeeRatingCount: number;
-    employeeRatings: {
+    guardRatingCount: number;
+    guardRatings: {
         review: number;
         overallRating: number;
     }[];
@@ -27,19 +27,19 @@ type IGuardProfileResponse = {
 
 async function fetchGuardData(slug: string) {
     const cookieStore = await cookies();
-    const selectedAgency = cookieStore.get("selectedAgency");
-    const sessionUserAgency = cookieStore.get("sessionUserAgency");
+    const selectedCompany = cookieStore.get("selectedCompany");
+    const sessionUserCompany = cookieStore.get("sessionUserCompany");
     try {
-        let agencyId = null;
+        let companyId = null;
 
-        if (selectedAgency?.value) {
-            agencyId = JSON.parse(selectedAgency?.value).id;
-        } else if (sessionUserAgency?.value) {
-            agencyId = JSON.parse(sessionUserAgency?.value).id;
+        if (selectedCompany?.value) {
+            companyId = JSON.parse(selectedCompany?.value).id;
+        } else if (sessionUserCompany?.value) {
+            companyId = JSON.parse(sessionUserCompany?.value).id;
         }
 
         const response = await apiClient<IGuardProfileResponse>({
-            url: `/api/employees/${agencyId}/${slug}/profile`,
+            url: `/api/guards/${companyId}/${slug}/profile`,
             method: "GET",
         });
 
@@ -58,8 +58,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const { slug } = await params;
     const guardData = await fetchGuardData(slug);
     return {
-        title: `${guardData?.employee.firstName} ${guardData?.employee.lastName} at ${guardData?.employee.agency.companyName}`,
-        description: `Give ratings and reviews for ${guardData?.employee.firstName} ${guardData?.employee.lastName}.`,
+        title: `${guardData?.guard.firstName} ${guardData?.guard.lastName} at ${guardData?.guard.company.companyName}`,
+        description: `Give ratings and reviews for ${guardData?.guard.firstName} ${guardData?.guard.lastName}.`,
     };
 }
 
@@ -83,14 +83,14 @@ const RootLayout = async ({
 
             <div className="sticky top-0 bg-white px-12 py-4 shadow-md">
                 <h1 className="font-poppins text-3xl font-extrabold">
-                    {guardData?.employee.firstName} {guardData?.employee.lastName}
+                    {guardData?.guard.firstName} {guardData?.guard.lastName}
                 </h1>
 
                 <h4 className="font-poppins text-xl mb-2">Add Rating</h4>
 
                 <p className="text-sm">
                     <span className="font-semibold">Guard at · </span>
-                    <span className="text-gray-500 underline">{guardData?.employee.agency.companyName}</span>
+                    <span className="text-gray-500 underline">{guardData?.guard.company.companyName}</span>
                 </p>
             </div>
 

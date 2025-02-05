@@ -5,7 +5,7 @@ import { genericClient } from "@/lib/genericClient";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 
-interface IEmployeeRegisterRequest {
+interface IGuardRegisterRequest {
     firstName: string;
     lastName: string;
     phoneNumber: string;
@@ -20,7 +20,7 @@ interface IEmployeeRegisterRequest {
     zip: string;
 }
 
-interface IEmployeeRegisterResponse {
+interface IGuardRegisterResponse {
     id: number;
 }
 
@@ -131,9 +131,9 @@ const Page = () => {
 
     const defaultValues = {};
 
-    const handleSubmit = async (values: IEmployeeRegisterRequest) => {
-        const response = await genericClient<IEmployeeRegisterRequest, IEmployeeRegisterResponse>({
-            url: "/api/employees",
+    const handleSubmit = async (values: IGuardRegisterRequest) => {
+        const response = await genericClient<IGuardRegisterRequest, IGuardRegisterResponse>({
+            url: "/api/guards",
             method: "POST",
             data: values,
             requireAuth: true,
@@ -161,7 +161,7 @@ const Page = () => {
                 <FormWizard
                     steps={steps}
                     defaultValues={defaultValues}
-                    onSubmit={(values) => handleSubmit(values as unknown as IEmployeeRegisterRequest)}
+                    onSubmit={(values) => handleSubmit(values as unknown as IGuardRegisterRequest)}
                 />
             </div>
 

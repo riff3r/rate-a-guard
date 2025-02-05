@@ -6,24 +6,24 @@ import { useRouter } from "next/navigation";
 import { genericClient } from "@/lib/genericClient";
 import toast from "react-hot-toast";
 
-type ISearchAgencyRequest = {
+type ISearchCompanyRequest = {
     text: string;
 };
 
-type ISearchAgencyResponse = Array<IAgency>;
+type ISearchCompanyResponse = Array<ICompany>;
 
 const SearchCompany: React.FC = () => {
     const router = useRouter();
     const [text, setText] = useState<string>("");
-    const [suggestions, setSuggestions] = useState<IAgency[]>([]);
+    const [suggestions, setSuggestions] = useState<ICompany[]>([]);
 
     const handleInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setText(value);
 
         if (value) {
-            const response = await genericClient<ISearchAgencyRequest, ISearchAgencyResponse>({
-                url: "/api/search/agencies",
+            const response = await genericClient<ISearchCompanyRequest, ISearchCompanyResponse>({
+                url: "/api/search/companies",
                 method: "GET",
                 params: { text: value },
                 requireAuth: true,
@@ -43,7 +43,7 @@ const SearchCompany: React.FC = () => {
         }
     };
 
-    const handleSuggestionClick = (suggestion: IAgency) => {
+    const handleSuggestionClick = (suggestion: ICompany) => {
         setText("");
         router.push(`/company/${suggestion.id}`);
         setSuggestions([]);

@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { genericClient } from "@/lib/genericClient";
 import toast from "react-hot-toast";
-import { redirect, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { BasicInput } from "@/components/ui/basic-input";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { ApiResponse } from "@/lib/apiClient";
 
-interface IUserPasswordResetRequest {
+interface IUserPasswordCreateRequest {
     emailAddress: string;
     password: string;
     confirmPassword: string;
@@ -17,44 +18,53 @@ interface IUserPasswordResetRequest {
 }
 
 const Page = () => {
+    const router = useRouter();
     const searchParams = useSearchParams();
     const code = searchParams.get("code") || "";
     const emailAddress = searchParams.get("emailAddress") || "";
 
-    const formInstance = useForm<IUserPasswordResetRequest>({
+    const formInstance = useForm<IUserPasswordCreateRequest>({
         defaultValues: {
             code: code,
             emailAddress: emailAddress,
         },
     });
-    const { handleSubmit, register, watch } = formInstance;
+    const {
+        handleSubmit,
+        register,
+        watch,
+        formState: { isSubmitting, isValid },
+    } = formInstance;
 
     const password = watch("password");
 
-    const onSubmit: SubmitHandler<IUserPasswordResetRequest> = async (data) => {
-        const response = await genericClient<IUserPasswordResetRequest, unknown>({
-            url: "/api/users/reset-password",
-            method: "PUT",
-            data: data,
-        });
-
-        if (response.error) {
-            toast.error(response.error);
-            return;
-        }
-
-        if (response.data) {
-            redirect("/");
-            return;
-        }
-
-        toast.error("Something went wrong! Try again later.");
+    const onSubmit: SubmitHandler<IUserPasswordCreateRequest> = async (data) => {
+        await toast.promise(
+            genericClient<IUserPasswordCreateRequest, unknown>({
+                url: "/api/users/create-password",
+                method: "PUT",
+                data: data,
+            }),
+            {
+                loading: "Processing...",
+                success: (response: ApiResponse<unknown>) => {
+                    if (response.data) {
+                        router.push("/?action=login");
+                        return "Password created successfully!";
+                    } else if (response.error) {
+                        throw new Error(response.error as unknown as string);
+                    }
+                    throw new Error("Unexpected response format.");
+                },
+                error: (err: { message: string }) => err.message || "Something went wrong! Try again later.",
+            }
+        );
     };
 
     return (
         <div className="bg-gray-50 py-16 px-4 flex items-center justify-center">
             <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-md">
-                <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Reset Password</h1>
+                <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Create Password</h1>
                 <FormProvider {...formInstance}>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div className="space-y-2">
@@ -106,7 +116,6 @@ const Page = () => {
                                 )}
                             />
                         </div>
-
                         <div className="space-y-2">
                             <FormField
                                 {...register("password")}
@@ -158,8 +167,9 @@ const Page = () => {
                         <Button
                             type="submit"
                             className="w-full rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
+                            disabled={isSubmitting || !isValid}
                         >
-                            Reset Password
+                            Create Password
                         </Button>
                     </form>
                 </FormProvider>

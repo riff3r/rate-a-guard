@@ -23,7 +23,7 @@ const SearchGuard: React.FC = () => {
 
         if (value) {
             const response = await genericClient<ISearchGuardRequest, ISearchGuardResponse>({
-                url: "/api/search/employees",
+                url: "/api/search/guards",
                 method: "GET",
                 params: { text: value },
                 requireAuth: true,

@@ -12,8 +12,8 @@ const handleLogout = async () => {
     const cookieStore = await cookies();
     cookieStore.delete("sessionToken");
     cookieStore.delete("sessionUser");
-    cookieStore.delete("sessionUserAgency");
-    cookieStore.delete("selectedAgency");
+    cookieStore.delete("sessionUserCompany");
+    cookieStore.delete("selectedCompany");
     redirect("/");
 };
 
@@ -37,7 +37,7 @@ const Navbar: React.FC = async () => {
                             RAG
                         </div>
 
-                        <SearchCombine textColorDark={false} />
+                        <SearchCombine />
                     </div>
 
                     <div className="flex items-center gap-4">

@@ -5,7 +5,7 @@ import { genericClient } from "@/lib/genericClient";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 
-interface IAgencyRegisterRequest {
+interface ICompanyRegisterRequest {
     address: string;
     city: string;
     companyName: string;
@@ -127,9 +127,9 @@ const Page = () => {
 
     const defaultValues = {};
 
-    const handleSubmit = async (values: IAgencyRegisterRequest) => {
-        const response = await genericClient<IAgencyRegisterRequest, unknown>({
-            url: "/api/agencies",
+    const handleSubmit = async (values: ICompanyRegisterRequest) => {
+        const response = await genericClient<ICompanyRegisterRequest, unknown>({
+            url: "/api/companies",
             method: "POST",
             data: values,
         });
@@ -154,7 +154,7 @@ const Page = () => {
                 <FormWizard
                     steps={steps}
                     defaultValues={defaultValues}
-                    onSubmit={(values) => handleSubmit(values as unknown as IAgencyRegisterRequest)}
+                    onSubmit={(values) => handleSubmit(values as unknown as ICompanyRegisterRequest)}
                 />
             </div>
 

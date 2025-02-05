@@ -17,7 +17,7 @@ interface IGuard {
     state: string;
 }
 
-interface IAgency {
+interface ICompany {
     id: number;
     companyName: string;
     licenseNumber: string;

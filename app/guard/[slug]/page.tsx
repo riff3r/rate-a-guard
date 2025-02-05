@@ -9,16 +9,16 @@ import { apiClient } from "@/lib/apiClient";
 import { cookies } from "next/headers";
 
 type IGuardProfileResponse = {
-    employee: {
+    guard: {
         firstName: string;
         lastName: string;
-        agency: {
+        company: {
             companyName: string;
         };
     };
     overallRatings: number;
-    employeeRatingCount: number;
-    employeeRatings: {
+    guardRatingCount: number;
+    guardRatings: {
         review: number;
         overallRating: number;
     }[];
@@ -29,20 +29,20 @@ type IGuardProfileResponse = {
 
 async function fetchGuardData(slug: string) {
     const cookieStore = await cookies();
-    const selectedAgency = cookieStore.get("selectedAgency");
-    const sessionUserAgency = cookieStore.get("sessionUserAgency");
+    const selectedCompany = cookieStore.get("selectedCompany");
+    const sessionUserCompany = cookieStore.get("sessionUserCompany");
 
     try {
-        let agencyId = null;
+        let companyId = null;
 
-        if (selectedAgency?.value) {
-            agencyId = JSON.parse(selectedAgency?.value).id;
-        } else if (sessionUserAgency?.value) {
-            agencyId = JSON.parse(sessionUserAgency?.value).id;
+        if (selectedCompany?.value) {
+            companyId = JSON.parse(selectedCompany?.value).id;
+        } else if (sessionUserCompany?.value) {
+            companyId = JSON.parse(sessionUserCompany?.value).id;
         }
 
         const response = await apiClient<IGuardProfileResponse>({
-            url: `/api/employees/${agencyId}/${slug}/profile`,
+            url: `/api/guards/${companyId}/${slug}/profile`,
             method: "GET",
         });
 
@@ -62,8 +62,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const guardData = await fetchGuardData(slug);
 
     return {
-        title: `${guardData?.employee.firstName} ${guardData?.employee.lastName} at ${guardData?.employee.agency.companyName}`,
-        description: `Explore the ratings and reviews for ${guardData?.employee.firstName} ${guardData?.employee.lastName}. Overall Quality: ${guardData?.overallRatings}/5 based on ${guardData?.employeeRatingCount} ratings.`,
+        title: `${guardData?.guard.firstName} ${guardData?.guard.lastName} at ${guardData?.guard.company.companyName}`,
+        description: `Explore the ratings and reviews for ${guardData?.guard.firstName} ${guardData?.guard.lastName}. Overall Quality: ${guardData?.overallRatings}/5 based on ${guardData?.guardRatingCount} ratings.`,
     };
 }
 
@@ -88,18 +88,18 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
                     <div className="font-semibold">
                         Overall Quality Based on{" "}
-                        <span className="underline">{guardData?.employeeRatingCount || "0"} Ratings</span>
+                        <span className="underline">{guardData?.guardRatingCount || "0"} Ratings</span>
                     </div>
 
                     <div className="flex items-center gap-2 my-5">
                         <div>
                             <h1 className="font-poppins text-3xl lg:text-5xl font-black mb-3">
-                                {guardData?.employee.firstName} {guardData?.employee.lastName}
+                                {guardData?.guard.firstName} {guardData?.guard.lastName}
                             </h1>
                             <p className="text-sm">
                                 <span className="font-semibold">Guard at · </span>
                                 <span className="text-gray-500 underline">
-                                    {guardData?.employee.agency.companyName}
+                                    {guardData?.guard.company.companyName}
                                 </span>
                             </p>
                         </div>
@@ -129,12 +129,12 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
             <div className="w-full lg:w-8/12 mt-5">
                 <Tabs defaultValue="profile">
                     <TabsList className="mb-5">
-                        <TabsTrigger value="profile">{guardData?.employeeRatingCount} Ratings</TabsTrigger>
+                        <TabsTrigger value="profile">{guardData?.guardRatingCount} Ratings</TabsTrigger>
                     </TabsList>
                 </Tabs>
 
                 <div className="flex flex-col gap-5">
-                    {guardData?.employeeRatings.map(
+                    {guardData?.guardRatings.map(
                         (rating: { review: number; overallRating: number }, index: number) => (
                             <div key={index} className="flex flex-col md:flex-row gap-2 p-5 bg-primary-foreground">
                                 <div className="flex gap-5">

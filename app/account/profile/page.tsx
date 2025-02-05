@@ -4,7 +4,7 @@ import { Pencil } from "lucide-react";
 import { redirect } from "next/navigation";
 
 type IUserProfileResponse = {
-    agency: {
+    company: {
         companyName: string;
         registeredAgentName: string;
     };
@@ -42,15 +42,15 @@ const Profile = async () => {
             <div className="flex flex-col gap-8">
                 <div className="flex items-center">
                     <span className="w-96">First Name </span>
-                    <div className="w-full">{userData?.agency.registeredAgentName.split(" ")[0]}</div>
+                    <div className="w-full">{userData?.company.registeredAgentName.split(" ")[0]}</div>
                 </div>
                 <div className="flex items-center">
                     <span className="w-96">Last Name </span>
-                    <div className="w-full">{userData?.agency.registeredAgentName.split(" ")[1]}</div>
+                    <div className="w-full">{userData?.company.registeredAgentName.split(" ")[1]}</div>
                 </div>
                 <div className="flex items-center">
                     <span className="w-96">Company Name</span>
-                    <div className="w-full">{userData?.agency.companyName}</div>
+                    <div className="w-full">{userData?.company.companyName}</div>
                 </div>
             </div>
         </TabsContent>

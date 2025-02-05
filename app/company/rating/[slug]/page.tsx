@@ -9,7 +9,7 @@ import StarRating from "@/components/rating/StarRating";
 import Rehirable from "@/components/rating/Rehirable";
 import { genericClient } from "@/lib/genericClient";
 
-type ISearchAgencyRequest = {
+type ISearchCompanyRequest = {
     benefitsRating: number;
     cultureRating: number;
     managementRating: number;
@@ -19,7 +19,7 @@ type ISearchAgencyRequest = {
     review: string;
 };
 
-type ISearchAgencyResponse = Array<IGuard>;
+type ISearchCompanyResponse = Array<IGuard>;
 
 const Rating = () => {
     const searchParams = useParams();
@@ -41,8 +41,8 @@ const Rating = () => {
         event.preventDefault();
 
         try {
-            const response = await genericClient<ISearchAgencyRequest, ISearchAgencyResponse>({
-                url: `/api/agency-ratings/${slug}`,
+            const response = await genericClient<ISearchCompanyRequest, ISearchCompanyResponse>({
+                url: `/api/company-ratings/${slug}`,
                 method: "POST",
                 data: formData,
                 requireAuth: true,

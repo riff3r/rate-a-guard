@@ -45,7 +45,7 @@ const Home = async () => {
                         )} */}
 
                         <div className="flex justify-center">
-                            <SearchCombine textColorDark={true} />
+                            <SearchCombine />
                         </div>
                     </div>
                 </section>

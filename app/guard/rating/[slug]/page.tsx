@@ -42,7 +42,7 @@ const Rating = () => {
 
         try {
             const response = await genericClient<ISearchGuardRequest, ISearchGuardResponse>({
-                url: `/api/employee-ratings/${slug}`,
+                url: `/api/guard-ratings/${slug}`,
                 method: "POST",
                 data: formData,
                 requireAuth: true,

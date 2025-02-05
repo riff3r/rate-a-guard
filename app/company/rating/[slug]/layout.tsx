@@ -5,13 +5,13 @@ import Navbar from "@/components/dashboard/navbar/Navbar";
 import { apiClient } from "@/lib/apiClient";
 import "../../../globals.css";
 
-type IAgencyProfileResponse = {
-    agency: {
+type ICompanyProfileResponse = {
+    company: {
         companyName: string;
     };
     overallRatings: number;
-    agencyRatingCount: number;
-    agencyRatings: {
+    companyRatingCount: number;
+    companyRatings: {
         review: number;
         overallRating: number;
     }[];
@@ -22,8 +22,8 @@ type IAgencyProfileResponse = {
 
 async function fetchGuardData(slug: string) {
     try {
-        const response = await apiClient<IAgencyProfileResponse>({
-            url: `/api/agencies/${slug}/profile`,
+        const response = await apiClient<ICompanyProfileResponse>({
+            url: `/api/companies/${slug}/profile`,
             method: "GET",
             requireAuth: true,
         });
@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const { slug } = await params;
     const guardData = await fetchGuardData(slug);
     return {
-        title: `${guardData?.agency.companyName}`,
-        description: `Give ratings and reviews for ${guardData?.agency.companyName}.`,
+        title: `${guardData?.company.companyName}`,
+        description: `Give ratings and reviews for ${guardData?.company.companyName}.`,
     };
 }
 
@@ -61,7 +61,7 @@ const RootLayout = async ({
 
             <div className="sticky top-0 bg-white px-12 py-4 shadow-md">
                 <h1 className="font-poppins text-3xl font-extrabold">
-                    {guardData?.agency.companyName}
+                    {guardData?.company.companyName}
                 </h1>
 
                 <h4 className="font-poppins text-xl mb-2">Add Rating</h4>

@@ -20,7 +20,7 @@ const Footer = () => {
                 </div>
 
                 <div className="text-white text-center text-sm gap-7 mt-3">
-                    © 2024 Rate A Guard, LLC. All Rights Reserved
+                    © 2024 RateAGuard.com, LLC. All Rights Reserved
                 </div>
             </div>
         </div>

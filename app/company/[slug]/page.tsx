@@ -7,13 +7,13 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { redirect } from "next/navigation";
 import { apiClient } from "@/lib/apiClient";
 
-type IAgencyProfileResponse = {
-    agency: {
+type ICompanyProfileResponse = {
+    company: {
         companyName: string;
     };
     overallRatings: number;
-    agencyRatingCount: number;
-    agencyRatings: {
+    companyRatingCount: number;
+    companyRatings: {
         review: number;
         overallRating: number;
     }[];
@@ -22,10 +22,10 @@ type IAgencyProfileResponse = {
     };
 };
 
-async function fetchAgencyData(slug: string) {
+async function fetchCompanyData(slug: string) {
     try {
-        const response = await apiClient<IAgencyProfileResponse>({
-            url: `/api/agencies/${slug}/profile`,
+        const response = await apiClient<ICompanyProfileResponse>({
+            url: `/api/companies/${slug}/profile`,
             method: "GET",
         });
 
@@ -42,19 +42,19 @@ async function fetchAgencyData(slug: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
-    const agencyData = await fetchAgencyData(slug);
+    const companyData = await fetchCompanyData(slug);
 
     return {
-        title: `${agencyData?.agency.companyName}`,
-        description: `Explore the ratings and reviews for ${agencyData?.agency.companyName}. Overall Quality: ${agencyData?.overallRatings}/5 based on ${agencyData?.agencyRatingCount} ratings.`,
+        title: `${companyData?.company.companyName}`,
+        description: `Explore the ratings and reviews for ${companyData?.company.companyName}. Overall Quality: ${companyData?.overallRatings}/5 based on ${companyData?.companyRatingCount} ratings.`,
     };
 }
 
-const Agency = async ({ params }: { params: Promise<{ slug: string }> }) => {
+const Company = async ({ params }: { params: Promise<{ slug: string }> }) => {
     const { slug } = await params;
-    const agencyData = await fetchAgencyData(slug);
+    const companyData = await fetchCompanyData(slug);
 
-    if (!agencyData) {
+    if (!companyData) {
         return null;
     }
 
@@ -64,20 +64,20 @@ const Agency = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 <div className="lg:w-4/12 w-full">
                     <div className="flex gap-2 mb-2">
                         <div className="text-5xl lg:text-7xl font-poppins font-[900]">
-                            {Number(agencyData?.overallRatings).toFixed(1) || "N/A"}
+                            {Number(companyData?.overallRatings).toFixed(1) || "N/A"}
                         </div>
                         <div className="text-base text-gray-400 font-bold top-3 relative">/ 5</div>
                     </div>
 
                     <div className="font-semibold">
                         Overall Quality Based on{" "}
-                        <span className="underline">{agencyData?.agencyRatingCount || "0"} Ratings</span>
+                        <span className="underline">{companyData?.companyRatingCount || "0"} Ratings</span>
                     </div>
 
                     <div className="flex items-center gap-2 my-5">
                         <div>
                             <h1 className="font-poppins text-3xl lg:text-5xl font-black mb-3">
-                                {agencyData?.agency.companyName}
+                                {companyData?.company.companyName}
                             </h1>
                         </div>
                         <Bookmark />
@@ -99,19 +99,19 @@ const Agency = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 </div>
 
                 <div className="lg:w-6/12 w-full">
-                    <GuardRatingChart starCounts={agencyData?.starCounts} />
+                    <GuardRatingChart starCounts={companyData?.starCounts} />
                 </div>
             </div>
 
             <div className="w-full lg:w-8/12 mt-5">
                 <Tabs defaultValue="profile">
                     <TabsList className="mb-5">
-                        <TabsTrigger value="profile">{agencyData?.agencyRatingCount} Ratings</TabsTrigger>
+                        <TabsTrigger value="profile">{companyData?.companyRatingCount} Ratings</TabsTrigger>
                     </TabsList>
                 </Tabs>
 
                 <div className="flex flex-col gap-5">
-                    {agencyData?.agencyRatings.map(
+                    {companyData?.companyRatings.map(
                         (rating: { review: number; overallRating: number }, index: number) => (
                             <div key={index} className="flex flex-col md:flex-row gap-2 p-5 bg-primary-foreground">
                                 <div className="flex gap-5">
@@ -133,4 +133,4 @@ const Agency = async ({ params }: { params: Promise<{ slug: string }> }) => {
     );
 };
 
-export default Agency;
+export default Company;
