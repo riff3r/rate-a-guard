@@ -26,20 +26,9 @@ type IGuardProfileResponse = {
 };
 
 async function fetchGuardData(slug: string) {
-    const cookieStore = await cookies();
-    const selectedCompany = cookieStore.get("selectedCompany");
-    const sessionUserCompany = cookieStore.get("sessionUserCompany");
     try {
-        let companyId = null;
-
-        if (selectedCompany?.value) {
-            companyId = JSON.parse(selectedCompany?.value).id;
-        } else if (sessionUserCompany?.value) {
-            companyId = JSON.parse(sessionUserCompany?.value).id;
-        }
-
         const response = await apiClient<IGuardProfileResponse>({
-            url: `/api/guards/${companyId}/${slug}/profile`,
+            url: `/api/guards/${slug}/profile`,
             method: "GET",
         });
 
