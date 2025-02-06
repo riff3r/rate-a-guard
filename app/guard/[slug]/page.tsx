@@ -98,9 +98,7 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
                             </h1>
                             <p className="text-sm">
                                 <span className="font-semibold">Guard at · </span>
-                                <span className="text-gray-500 underline">
-                                    {guardData?.guard.company.companyName}
-                                </span>
+                                <span className="text-gray-500 underline">{guardData?.guard.company.companyName}</span>
                             </p>
                         </div>
                         <Bookmark />
@@ -134,22 +132,20 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 </Tabs>
 
                 <div className="flex flex-col gap-5">
-                    {guardData?.guardRatings.map(
-                        (rating: { review: number; overallRating: number }, index: number) => (
-                            <div key={index} className="flex flex-col md:flex-row gap-2 p-5 bg-primary-foreground">
-                                <div className="flex gap-5">
-                                    <div>
-                                        <div className="text-center uppercase font-semibold text-sm">Quality</div>
-                                        <div className="h-16 min-w-[72px] bg-destructive font-poppins text-3xl font-extrabold flex justify-center items-center">
-                                            {Number(rating.overallRating).toFixed(1)}
-                                        </div>
+                    {guardData?.guardRatings.map((rating: { review: number; overallRating: number }, index: number) => (
+                        <div key={index} className="flex flex-col md:flex-row gap-2 p-5 bg-primary-foreground">
+                            <div className="flex gap-5">
+                                <div>
+                                    <div className="text-center uppercase font-semibold text-sm">Quality</div>
+                                    <div className="h-16 min-w-[72px] bg-destructive font-poppins text-3xl font-extrabold flex justify-center items-center">
+                                        {Number(rating.overallRating).toFixed(1)}
                                     </div>
-
-                                    <div className="flex-1">{rating.review}</div>
                                 </div>
+
+                                <div className="flex-1">{rating.review}</div>
                             </div>
-                        )
-                    )}
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

@@ -8,11 +8,16 @@ import toast from "react-hot-toast";
 
 type ISearchGuardRequest = {
     text: string;
+    companyId?: number;
 };
 
 type ISearchGuardResponse = Array<IGuard>;
 
-const SearchGuard: React.FC = () => {
+interface IProps {
+    selectedCompany?: ICompany | null;
+}
+
+const SearchGuard: React.FC<IProps> = ({ selectedCompany }) => {
     const router = useRouter();
     const [text, setText] = useState<string>("");
     const [suggestions, setSuggestions] = useState<IGuard[]>([]);
@@ -25,8 +30,7 @@ const SearchGuard: React.FC = () => {
             const response = await genericClient<ISearchGuardRequest, ISearchGuardResponse>({
                 url: "/api/search/guards",
                 method: "GET",
-                params: { text: value },
-                requireAuth: true,
+                params: { text: value, companyId: selectedCompany?.id },
             });
 
             if (response.error) {
@@ -50,7 +54,7 @@ const SearchGuard: React.FC = () => {
     };
 
     return (
-        <div className="relative w-full max-w-md mx-auto">
+        <div className="relative w-full max-w-[460px]">
             <Input
                 type="text"
                 value={text}
@@ -73,6 +77,12 @@ const SearchGuard: React.FC = () => {
                                     <span>{suggestion.licenseNumber}</span>
                                     <span className="mx-1">•</span>
                                     <span className="font-medium">{suggestion.state}</span>
+                                    {!selectedCompany && (
+                                        <>
+                                            <span className="mx-1">•</span>
+                                            <span className="font-medium">{suggestion.company?.companyName}</span>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </li>

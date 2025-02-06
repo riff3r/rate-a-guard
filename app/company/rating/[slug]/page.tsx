@@ -179,7 +179,10 @@ const Rating = () => {
                         A Guard Site Guidelines, Terms of Use and Privacy Policy.
                     </p>
 
-                    <Button className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none" type="submit">
+                    <Button
+                        className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
+                        type="submit"
+                    >
                         Submit Rating
                     </Button>
                 </div>

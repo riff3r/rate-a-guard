@@ -34,9 +34,7 @@ const RootLayout = ({
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}>
                 <Toaster position="top-right" />
-                <Suspense fallback={<div>Loading...</div>}>
-                    {children}
-                </Suspense>
+                <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
             </body>
         </html>
     );

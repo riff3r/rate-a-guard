@@ -1,13 +1,13 @@
-import Footer from "@/components/dashboard/footer/Footer";
+import Footer from "@/components/common/footer/Footer";
 import HomeNavbar from "@/components/home/HomeNavbar";
-import SearchCombine from "@/components/dashboard/search/SearchCombine";
+import HeroWithSearchSection from "@/components/home/HeroWithSearchSection";
 
 const Home = async () => {
     return (
         <>
             <HomeNavbar />
 
-            <div className={`h-[calc(100vh-136px)] overflow-y-auto`}>
+            <div className="h-[calc(100vh-136px)] overflow-y-auto">
                 <section className="bg-gray-50 py-16 px-4 text-center relative">
                     <div
                         className="absolute inset-0 bg-black opacity-40 h-full w-full z-1 blur-sm bg-cover bg-center"
@@ -26,26 +26,8 @@ const Home = async () => {
                             security companies. Join us in creating a more transparent and efficient security workforce.
                         </p>
 
-                        {/* {!sessionToken?.value && (
-                            <div className="flex justify-center gap-4">
-                                <Button
-                                    className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
-                                    onClick={async () => {
-                                        "use server";
-
-                                        redirect("/register/company");
-                                    }}
-                                >
-                                    Register Now
-                                </Button>
-                                <Button variant={"outline"} className="rounded-full font-semibold focus: outline-none">
-                                    Learn More
-                                </Button>
-                            </div>
-                        )} */}
-
                         <div className="flex justify-center">
-                            <SearchCombine />
+                            <HeroWithSearchSection />
                         </div>
                     </div>
                 </section>

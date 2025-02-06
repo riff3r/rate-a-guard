@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import Footer from "@/components/dashboard/footer/Footer";
-import Navbar from "@/components/dashboard/navbar/Navbar";
+import Footer from "@/components/common/footer/Footer";
+import Navbar from "@/components/common/navbar/Navbar";
 import { apiClient } from "@/lib/apiClient";
 import "../../../globals.css";
 

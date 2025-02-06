@@ -36,4 +36,3 @@ export const genericClient = async <T, R>(payload: RequestPayload<T>): Promise<A
         return { error: (error as Error).message };
     }
 };
-

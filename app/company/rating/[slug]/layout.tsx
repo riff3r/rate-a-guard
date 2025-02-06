@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import Footer from "@/components/dashboard/footer/Footer";
-import Navbar from "@/components/dashboard/navbar/Navbar";
+import Footer from "@/components/common/footer/Footer";
+import Navbar from "@/components/common/navbar/Navbar";
 import { apiClient } from "@/lib/apiClient";
 import "../../../globals.css";
 
@@ -54,18 +54,15 @@ const RootLayout = async ({
 }: Readonly<{ params: Promise<{ slug: string }>; children: React.ReactNode }>) => {
     const { slug } = await params;
     const guardData = await fetchGuardData(slug);
-    
+
     return (
         <>
             <Navbar />
 
             <div className="sticky top-0 bg-white px-12 py-4 shadow-md">
-                <h1 className="font-poppins text-3xl font-extrabold">
-                    {guardData?.company.companyName}
-                </h1>
+                <h1 className="font-poppins text-3xl font-extrabold">{guardData?.company.companyName}</h1>
 
                 <h4 className="font-poppins text-xl mb-2">Add Rating</h4>
-
             </div>
 
             <div className="h-[calc(100vh-240px)] overflow-y-auto">

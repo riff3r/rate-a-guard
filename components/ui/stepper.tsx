@@ -18,14 +18,16 @@ const Stepper = ({ steps, currentStep, className }: IProps) => {
 
                     <div className="flex flex-col items-center max-w-[3.5rem]">
                         <div
-                            className={`flex items-center justify-center w-10 h-10 rounded-full ${index <= currentStep ? "bg-black text-white" : "bg-gray-200 text-gray-500"
-                                }`}
+                            className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                                index <= currentStep ? "bg-black text-white" : "bg-gray-200 text-gray-500"
+                            }`}
                         >
                             {index + 1}
                         </div>
                         <span
-                            className={`mt-2 text-sm text-center ${index <= currentStep ? "text-gray-700 font-semibold" : "text-gray-500"
-                                }`}
+                            className={`mt-2 text-sm text-center ${
+                                index <= currentStep ? "text-gray-700 font-semibold" : "text-gray-500"
+                            }`}
                         >
                             {step.legend}
                         </span>

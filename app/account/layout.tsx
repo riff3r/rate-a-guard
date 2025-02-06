@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/dashboard/navbar/Navbar";
+import Navbar from "@/components/common/navbar/Navbar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Footer from "@/components/dashboard/footer/Footer";
+import Footer from "@/components/common/footer/Footer";
 import "../globals.css";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";

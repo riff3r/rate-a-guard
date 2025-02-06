@@ -31,7 +31,7 @@ async function fetchUserData() {
 
 const Profile = async () => {
     const userData = await fetchUserData();
-    
+
     return (
         <TabsContent value="profile" className="focus: outline-none">
             <div className="mb-6 mt-10 flex items-center justify-end gap-4">

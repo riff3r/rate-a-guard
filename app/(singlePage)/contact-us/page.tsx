@@ -1,5 +1,5 @@
-import Footer from "@/components/dashboard/footer/Footer";
-import Navbar from "@/components/dashboard/navbar/Navbar";
+import Footer from "@/components/common/footer/Footer";
+import Navbar from "@/components/common/navbar/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";

@@ -15,6 +15,9 @@ interface IGuard {
     lastName: string;
     licenseNumber: string;
     state: string;
+    company?: {
+        companyName: string;
+    };
 }
 
 interface ICompany {

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import NavbarLoginButton from "@/components/auth/NavLoginButton";
 import { Button } from "@/components/ui/button";
-import SearchCombine from "../search/SearchCombine";
+import NavbarSearchSection from "./NavbarSearchSection";
 
 const handleLogout = async () => {
     "use server";
@@ -37,7 +37,7 @@ const Navbar: React.FC = async () => {
                             RAG
                         </div>
 
-                        <SearchCombine />
+                        <NavbarSearchSection />
                     </div>
 
                     <div className="flex items-center gap-4">

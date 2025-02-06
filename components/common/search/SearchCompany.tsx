@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { genericClient } from "@/lib/genericClient";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 type ISearchCompanyRequest = {
     text: string;
@@ -12,7 +13,12 @@ type ISearchCompanyRequest = {
 
 type ISearchCompanyResponse = Array<ICompany>;
 
-const SearchCompany: React.FC = () => {
+interface IProps {
+    redirect?: boolean;
+    onSelectCompany?: (company: ICompany) => void;
+}
+
+const SearchCompany: React.FC<IProps> = ({ redirect = false, onSelectCompany }) => {
     const router = useRouter();
     const [text, setText] = useState<string>("");
     const [suggestions, setSuggestions] = useState<ICompany[]>([]);
@@ -26,7 +32,6 @@ const SearchCompany: React.FC = () => {
                 url: "/api/search/companies",
                 method: "GET",
                 params: { text: value },
-                requireAuth: true,
             });
 
             if (response.error) {
@@ -45,12 +50,16 @@ const SearchCompany: React.FC = () => {
 
     const handleSuggestionClick = (suggestion: ICompany) => {
         setText("");
-        router.push(`/company/${suggestion.id}`);
+        if (redirect) {
+            router.push(`/company/${suggestion.id}`);
+        } else if (onSelectCompany) {
+            onSelectCompany(suggestion);
+        }
         setSuggestions([]);
     };
 
     return (
-        <div className="relative w-full mx-auto">
+        <div className="relative w-full max-w-[460px]">
             <Input
                 type="text"
                 value={text}
@@ -63,16 +72,24 @@ const SearchCompany: React.FC = () => {
                         <li
                             key={index}
                             className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-700 text-start"
-                            onClick={() => handleSuggestionClick(suggestion)}
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                handleSuggestionClick(suggestion);
+                            }}
                         >
                             <div>
-                                <div className="text-lg font-semibold text-gray-800">
-                                    {suggestion.companyName}
-                                </div>
+                                <div className="text-lg font-semibold text-gray-800">{suggestion.companyName}</div>
                                 <div className="flex items-center space-x-2 text-sm text-gray-600">
                                     <span>{suggestion.licenseNumber}</span>
                                     <span className="mx-1">•</span>
                                     <span className="font-medium">{suggestion.state}</span>
+                                    <Link
+                                        className="underline font-semibold"
+                                        onClick={(event) => event.stopPropagation()}
+                                        href={`/company/${suggestion.id}`}
+                                    >
+                                        Go to company&apos;s page
+                                    </Link>
                                 </div>
                             </div>
                         </li>

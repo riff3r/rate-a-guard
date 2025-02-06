@@ -19,13 +19,13 @@ const POST = async (request: Request) => {
             method,
             data,
             params,
-            requireAuth
+            requireAuth,
         });
 
         return NextResponse.json(response);
     } catch (error) {
-            const axiosError = error as ApiError;
-        
+        const axiosError = error as ApiError;
+
         return NextResponse.json({ error: (error as Error).message, details: axiosError.errorData }, { status: 500 });
     }
 };

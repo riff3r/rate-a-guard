@@ -55,7 +55,7 @@ const FormWizard: React.FC<Readonly<FormWizardProps>> = (props) => {
         <div>
             <Stepper
                 steps={steps}
-                currentStep={steps.findIndex((step) => (step.id === activeStep.id))}
+                currentStep={steps.findIndex((step) => step.id === activeStep.id)}
                 className="px-8 mb-8"
             />
             <Form
