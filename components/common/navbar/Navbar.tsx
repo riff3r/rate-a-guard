@@ -47,7 +47,7 @@ const Navbar: React.FC = async () => {
 
     let userTokenData = null;
 
-    if(sessionToken?.value){
+    if (sessionToken?.value) {
         userTokenData = await fetchUserTokenData();
     }
 
@@ -66,8 +66,7 @@ const Navbar: React.FC = async () => {
                         >
                             RAG
                         </div>
-
-                        <NavbarSearchSection />
+                        {sessionToken && <NavbarSearchSection />}
                     </div>
 
                     <div className="flex items-center gap-4">

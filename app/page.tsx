@@ -1,8 +1,14 @@
 import Footer from "@/components/common/footer/Footer";
 import HomeNavbar from "@/components/home/HomeNavbar";
 import HeroWithSearchSection from "@/components/home/HeroWithSearchSection";
+import { cookies } from "next/headers";
+import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
 const Home = async () => {
+    const cookieStore = await cookies();
+    const sessionToken = cookieStore.get("sessionToken");
+
     return (
         <>
             <HomeNavbar />
@@ -26,9 +32,27 @@ const Home = async () => {
                             security companies. Join us in creating a more transparent and efficient security workforce.
                         </p>
 
-                        <div className="flex justify-center">
-                            <HeroWithSearchSection />
-                        </div>
+                        {sessionToken?.value ? (
+                            <div className="flex justify-center">
+                                <HeroWithSearchSection />
+                            </div>
+                        ) : (
+                            <div className="flex justify-center gap-4">
+                                <Button
+                                    className="px-6 py-3 text-white bg-blue-600 hover:bg-blue-700"
+                                    onClick={async () => {
+                                        "use server";
+
+                                        redirect("/register/company");
+                                    }}
+                                >
+                                    Register Now
+                                </Button>
+                                <Button variant={"outline"} className="px-6 py-3">
+                                    Learn More
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </section>
 
