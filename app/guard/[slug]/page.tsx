@@ -31,6 +31,7 @@ async function fetchGuardData(slug: string) {
         const response = await apiClient<IGuardProfileResponse>({
             url: `/api/guards/${slug}/profile`,
             method: "GET",
+            requireAuth: true,
         });
 
         if (response.data) {
@@ -39,8 +40,7 @@ async function fetchGuardData(slug: string) {
 
         redirect("/");
     } catch (err) {
-        console.log(err);
-        redirect("/");
+        redirect(`/?action=alert&message=${err.message}`);
     }
 }
 

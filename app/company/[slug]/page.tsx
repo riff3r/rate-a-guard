@@ -27,6 +27,7 @@ async function fetchCompanyData(slug: string) {
         const response = await apiClient<ICompanyProfileResponse>({
             url: `/api/companies/${slug}/profile`,
             method: "GET",
+            requireAuth: true,
         });
 
         if (response.data) {
@@ -35,8 +36,7 @@ async function fetchCompanyData(slug: string) {
 
         redirect("/");
     } catch (err) {
-        console.log(err);
-        redirect("/");
+        redirect(`/?action=alert&message=${err.message}`);
     }
 }
 

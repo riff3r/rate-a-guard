@@ -10,7 +10,7 @@ type IUserProfileResponse = {
     };
 };
 
-async function fetchUserData() {
+const fetchUserData = async () => {
     try {
         const response = await apiClient<IUserProfileResponse>({
             url: "/api/users/profile",
@@ -27,7 +27,7 @@ async function fetchUserData() {
         console.log(err);
         redirect("/");
     }
-}
+};
 
 const Profile = async () => {
     const userData = await fetchUserData();
