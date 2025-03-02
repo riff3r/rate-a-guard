@@ -20,10 +20,10 @@ type ICompanyProfileResponse = {
     };
 };
 
-async function fetchGuardData(slug: string) {
+async function fetchGuardMetaData(slug: string) {
     try {
         const response = await apiClient<ICompanyProfileResponse>({
-            url: `/api/companies/${slug}/profile`,
+            url: `/api/companies/${slug}/meta`,
             method: "GET",
             requireAuth: true,
         });
@@ -41,7 +41,7 @@ async function fetchGuardData(slug: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
-    const guardData = await fetchGuardData(slug);
+    const guardData = await fetchGuardMetaData(slug);
     return {
         title: `${guardData?.company.companyName}`,
         description: `Give ratings and reviews for ${guardData?.company.companyName}.`,
@@ -53,7 +53,7 @@ const RootLayout = async ({
     children,
 }: Readonly<{ params: Promise<{ slug: string }>; children: React.ReactNode }>) => {
     const { slug } = await params;
-    const guardData = await fetchGuardData(slug);
+    const guardData = await fetchGuardMetaData(slug);
 
     return (
         <>

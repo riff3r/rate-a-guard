@@ -39,16 +39,16 @@ const Home = async () => {
                         ) : (
                             <div className="flex justify-center gap-4">
                                 <Button
-                                    className="px-6 py-3 text-white bg-blue-600 hover:bg-blue-700"
                                     onClick={async () => {
                                         "use server";
 
                                         redirect("/register/company");
                                     }}
+                                    className="rounded-full font-semibold bg-foreground hover:bg-neutral-700 focus: outline-none"
                                 >
                                     Register Now
                                 </Button>
-                                <Button variant={"outline"} className="px-6 py-3">
+                                <Button variant={"outline"} className="rounded-full font-semibold focus: outline-none">
                                     Learn More
                                 </Button>
                             </div>

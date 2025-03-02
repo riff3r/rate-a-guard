@@ -40,9 +40,27 @@ async function fetchCompanyData(slug: string) {
     }
 }
 
+async function fetchCompanyMetaData(slug: string) {
+    try {
+        const response = await apiClient<ICompanyProfileResponse>({
+            url: `/api/companies/${slug}/meta`,
+            method: "GET",
+            requireAuth: true,
+        });
+
+        if (response.data) {
+            return response.data;
+        }
+
+        redirect("/");
+    } catch (err) {
+        redirect(`/?action=alert&message=${err.message}`);
+    }
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
-    const companyData = await fetchCompanyData(slug);
+    const companyData = await fetchCompanyMetaData(slug);
 
     return {
         title: `${companyData?.company.companyName}`,

@@ -39,16 +39,30 @@ export default function RootLayout({
 
                     <Tabs defaultValue="profile" className="focus: outline-none">
                         <TabsList className="flex flex-wrap gap-2 sm:gap-4">
-                            <TabsTrigger value="profile" className="px-4">
+                            <TabsTrigger
+                                value="profile"
+                                className="px-4"
+                                onClick={async () => {
+                                    "use server";
+                                    redirect("/account/profile");
+                                }}
+                            >
                                 Profile
                             </TabsTrigger>
-                            <TabsTrigger value="account" className="px-4">
+                            {/* <TabsTrigger value="account" className="px-4">
                                 Account Settings
                             </TabsTrigger>
                             <TabsTrigger value="rating" className="px-4">
                                 Your Ratings
-                            </TabsTrigger>
-                            <TabsTrigger value="saved" className="px-4">
+                            </TabsTrigger> */}
+                            <TabsTrigger
+                                value="saved"
+                                className="px-4"
+                                onClick={async () => {
+                                    "use server";
+                                    redirect("/account/saved");
+                                }}
+                            >
                                 Saved Guard
                             </TabsTrigger>
                         </TabsList>

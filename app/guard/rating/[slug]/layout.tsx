@@ -6,7 +6,7 @@ import Navbar from "@/components/common/navbar/Navbar";
 import { apiClient } from "@/lib/apiClient";
 import "../../../globals.css";
 
-type IGuardProfileResponse = {
+type IGuardMetaResponse = {
     guard: {
         firstName: string;
         lastName: string;
@@ -14,21 +14,12 @@ type IGuardProfileResponse = {
             companyName: string;
         };
     };
-    overallRatings: number;
-    guardRatingCount: number;
-    guardRatings: {
-        review: number;
-        overallRating: number;
-    }[];
-    starCounts: {
-        [star: number]: number;
-    };
 };
 
-async function fetchGuardData(slug: string) {
+async function fetchGuardMetaData(slug: string) {
     try {
-        const response = await apiClient<IGuardProfileResponse>({
-            url: `/api/guards/${slug}/profile`,
+        const response = await apiClient<IGuardMetaResponse>({
+            url: `/api/guards/${slug}/meta`,
             method: "GET",
             requireAuth: true,
         });
@@ -39,14 +30,13 @@ async function fetchGuardData(slug: string) {
 
         redirect("/");
     } catch (err) {
-        console.log(err);
-        redirect("/");
+        redirect(`/?action=alert&message=${err.message}`);
     }
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
-    const guardData = await fetchGuardData(slug);
+    const guardData = await fetchGuardMetaData(slug);
     return {
         title: `${guardData?.guard.firstName} ${guardData?.guard.lastName} at ${guardData?.guard.company.companyName}`,
         description: `Give ratings and reviews for ${guardData?.guard.firstName} ${guardData?.guard.lastName}.`,
@@ -65,7 +55,7 @@ const RootLayout = async ({
     }
 
     const { slug } = await params;
-    const guardData = await fetchGuardData(slug);
+    const guardData = await fetchGuardMetaData(slug);
 
     return (
         <>

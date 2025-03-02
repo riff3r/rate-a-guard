@@ -24,6 +24,27 @@ type IGuardProfileResponse = {
     starCounts: {
         [star: number]: number;
     };
+    guardAllCompanies: {
+        firstName: string;
+        lastName: string;
+        joiningDate: string;
+        resignationDate: string;
+        company: {
+            companyName: string;
+        };
+    }[];
+};
+
+type IGuardMetaResponse = {
+    guard: {
+        firstName: string;
+        lastName: string;
+        company: {
+            companyName: string;
+        };
+    };
+    overallRatings: number;
+    guardRatingCount: number;
 };
 
 async function fetchGuardData(slug: string) {
@@ -44,9 +65,27 @@ async function fetchGuardData(slug: string) {
     }
 }
 
+async function fetchGuardMetaData(slug: string) {
+    try {
+        const response = await apiClient<IGuardMetaResponse>({
+            url: `/api/guards/${slug}/meta`,
+            method: "GET",
+            requireAuth: true,
+        });
+
+        if (response.data) {
+            return response.data;
+        }
+
+        redirect("/");
+    } catch (err) {
+        redirect(`/?action=alert&message=${err.message}`);
+    }
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
-    const guardData = await fetchGuardData(slug);
+    const guardData = await fetchGuardMetaData(slug);
 
     return {
         title: `${guardData?.guard.firstName} ${guardData?.guard.lastName} at ${guardData?.guard.company.companyName}`,
@@ -110,6 +149,25 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
                     <GuardRatingChart starCounts={guardData?.starCounts} />
                 </div>
             </div>
+
+            {guardData.guardAllCompanies[0] && (
+                <div className="w-full lg:w-8/12 mt-5">
+                    <h2 className="text-xl font-semibold mb-4">Previous Companies</h2>
+                    <ul className="space-y-4">
+                        {guardData.guardAllCompanies.map((company, index) => (
+                            <li key={index} className="p-4 border">
+                                <h3 className="text-lg font-medium underline">{company.company.companyName}</h3>
+                                <p className="text-sm text-gray-600">
+                                    <span className="font-semibold">Joined:</span> {company.joiningDate}
+                                </p>
+                                <p className="text-sm text-gray-600">
+                                    <span className="font-semibold">Resigned:</span> {company.resignationDate}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
             <div className="w-full lg:w-8/12 mt-5">
                 <Tabs defaultValue="profile">

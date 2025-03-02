@@ -101,7 +101,7 @@ const Navbar: React.FC = async () => {
                                     >
                                         Profile
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem
+                                    {/* <DropdownMenuItem
                                         onClick={async () => {
                                             "use server";
 
@@ -120,12 +120,12 @@ const Navbar: React.FC = async () => {
                                         className="focus:bg-primary focus:text-white"
                                     >
                                         Your Ratings
-                                    </DropdownMenuItem>
+                                    </DropdownMenuItem> */}
                                     <DropdownMenuItem
                                         onClick={async () => {
                                             "use server";
 
-                                            redirect("/account/profile");
+                                            redirect("/account/saved");
                                         }}
                                         className="focus:bg-primary focus:text-white"
                                     >

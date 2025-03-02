@@ -8,7 +8,7 @@ import SearchGuard from "../common/search/SearchGuard";
 
 const HeroWithSearchSection = () => {
     const [selectedCompany, setSelectedCompany] = useState<ICompany | null>(null);
-    const [find, setFind] = useState<string>("company");
+    const [find, setFind] = useState<string>("guard");
 
     useEffect(() => {
         const cookieSelectedCompany = Cookies.get("selectedCompany");

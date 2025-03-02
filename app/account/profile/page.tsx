@@ -1,6 +1,6 @@
+import EditProfileButton from "@/components/account/EditProfileButton";
 import { apiClient } from "@/lib/apiClient";
 import { TabsContent } from "@radix-ui/react-tabs";
-import { Pencil } from "lucide-react";
 import { redirect } from "next/navigation";
 
 type IUserProfileResponse = {
@@ -34,10 +34,13 @@ const Profile = async () => {
 
     return (
         <TabsContent value="profile" className="focus: outline-none">
-            <div className="mb-6 mt-10 flex items-center justify-end gap-4">
-                <Pencil size={18} strokeWidth={3} className="cursor-pointer" />
-                <span className="cursor-pointer text-sm font-semibold">Edit</span>
-            </div>
+            <EditProfileButton
+                userData={{
+                    firstName: userData?.company.registeredAgentName.split(" ")[0],
+                    lastName: userData?.company.registeredAgentName.split(" ")[1],
+                    companyName: userData?.company.companyName
+                }}
+            />
 
             <div className="flex flex-col gap-8">
                 <div className="flex items-center">

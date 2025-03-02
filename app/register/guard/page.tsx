@@ -58,6 +58,18 @@ const Page = () => {
                     placeholder: "Type a valid phone number",
                     rules: { required: "Phone number is required." },
                 },
+                {
+                    label: "Joining Date",
+                    type: "date",
+                    name: "joiningDate",
+                    rules: { required: "Joining date is required." },
+                },
+                {
+                    label: "Resignation Date",
+                    type: "date",
+                    name: "resignationDate",
+                    rules: {},
+                },
             ],
         },
         {

@@ -14,7 +14,7 @@ import SearchCompany from "../search/SearchCompany";
 
 const NavbarSearchSection = () => {
     const [selectedCompany, setSelectedCompany] = useState<ICompany | null>(null);
-    const [findByCompany, setFindByCompany] = useState<boolean>(true);
+    const [findByCompany, setFindByCompany] = useState<boolean>(false);
     const [findCompany, setFindCompany] = useState<boolean>(true);
 
     useEffect(() => {
