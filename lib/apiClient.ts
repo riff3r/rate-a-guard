@@ -148,7 +148,6 @@ const handleTokenRefresh = async (response: AxiosResponse): Promise<AxiosRespons
         const { tokens } = await apiClient<{ tokens: Tokens }>({
             url: "/auth/refresh",
             method: "POST",
-            handleTokens: true,
         });
 
         axios.defaults.headers.common["Authorization"] = `Bearer ${tokens?.access.token}`;

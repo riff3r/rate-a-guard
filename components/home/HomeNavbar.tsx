@@ -36,7 +36,7 @@ const fetchUserTokenData = async () => {
         redirect("/");
     } catch (err) {
         console.log(err);
-        redirect("/");
+        //redirect("/");
     }
 };
 
