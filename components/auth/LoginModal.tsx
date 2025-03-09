@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { genericClient } from "@/lib/genericClient";
 import Link from "next/link";
+import { ApiResponse } from "@/lib/apiClient";
 
 interface IProps {
     isOpen: boolean;
@@ -19,7 +20,7 @@ interface ILoginRequest {
 }
 
 interface ILoginResponse {
-    tokens: Tokens;
+    authTokens: IAuthTokens;
     user: unknown;
     company: unknown;
     error?: string;
@@ -34,28 +35,33 @@ const LoginModal: React.FC<IProps> = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     const onSubmit = async (data: ILoginRequest) => {
-        const response = await genericClient<ILoginRequest, ILoginResponse>({
-            url: "/api/users/login",
-            method: "POST",
-            data: data,
-        });
-
-        if (response.error) {
-            toast.error(response.error);
-            return;
-        }
-
-        if (response.data) {
-            reset();
-            onClose();
-            Cookies.set("sessionToken", JSON.stringify(response.data.tokens));
-            Cookies.set("sessionUser", JSON.stringify(response.data.user));
-            Cookies.set("sessionUserCompany", JSON.stringify(response.data.company));
-            router.refresh();
-            return;
-        }
-
-        toast.error("Something went wrong! Try again later.");
+        await toast.promise(
+            genericClient<ILoginRequest, ILoginResponse>({
+                url: "/api/users/login",
+                method: "POST",
+                data: data,
+            }),
+            {
+                loading: "Processing...",
+                success: (response: ApiResponse<ILoginResponse>) => {
+                    if (response.data) {
+                        reset();
+                        onClose();
+                        const epochTime = response.data.authTokens.access.expires;
+                        
+                        Cookies.set("sessionToken", JSON.stringify(response.data.authTokens), { expires: new Date(epochTime * 1000) });
+                        Cookies.set("sessionUser", JSON.stringify(response.data.user), { expires: new Date(epochTime * 1000) });
+                        Cookies.set("sessionUserCompany", JSON.stringify(response.data.company), { expires: new Date(epochTime * 1000) });
+                        router.refresh();
+                        return;
+                    } else if (response.error) {
+                        throw new Error(response.error as unknown as string);
+                    }
+                    throw new Error("Unexpected response format.");
+                },
+                error: (err: { message: string }) => err.message || "Something went wrong! Try again later.",
+            }
+        );
     };
 
     return (
@@ -120,9 +126,9 @@ const LoginModal: React.FC<IProps> = ({ isOpen, onClose }) => {
                 </form>
                 <p className="mt-4 text-center text-sm">
                     Don’t have an account?{" "}
-                    <a href="#" className="text-blue-500 hover:underline">
+                    <Link href="/register/company" className="text-blue-500 hover:underline">
                         Register Now
-                    </a>
+                    </Link>
                 </p>
                 <button onClick={onClose} className="mt-4 w-full text-center text-sm text-red-500 hover:underline">
                     Close

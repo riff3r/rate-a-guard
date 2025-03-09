@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import StarRating from "@/components/rating/StarRating";
 import Rehirable from "@/components/rating/Rehirable";
 import { genericClient } from "@/lib/genericClient";
+import { ApiResponse } from "@/lib/apiClient";
 
 type ISearchCompanyRequest = {
     benefitsRating: number;
@@ -41,22 +42,27 @@ const Rating = () => {
         event.preventDefault();
 
         try {
-            const response = await genericClient<ISearchCompanyRequest, ISearchCompanyResponse>({
-                url: `/api/company-ratings/${slug}`,
-                method: "POST",
-                data: formData,
-                requireAuth: true,
-            });
-
-            if (response.error) {
-                toast.error(response.error);
-                setErrorMessage(response.error || "Review submission failed. Please try again.");
-                return;
-            }
-
-            if (response.data) {
-                router.push(`/company/rating/${slug}/success`);
-            }
+            await toast.promise(
+                genericClient<ISearchCompanyRequest, ISearchCompanyResponse>({
+                    url: `/api/company-ratings/${slug}`,
+                    method: "POST",
+                    data: formData,
+                    requireAuth: true,
+                }),
+                {
+                    loading: "Processing...",
+                    success: (response: ApiResponse<ISearchCompanyResponse>) => {
+                        if (response.data) {
+                            router.push(`/company/rating/${slug}/success`);
+                            return;
+                        } else if (response.error) {
+                            throw new Error(response.error as unknown as string);
+                        }
+                        throw new Error("Unexpected response format.");
+                    },
+                    error: (err: { message: string }) => err.message || "Something went wrong! Try again later.",
+                }
+            );
         } catch (error) {
             console.error(error);
             setErrorMessage("An unexpected error occurred. Please try again.");

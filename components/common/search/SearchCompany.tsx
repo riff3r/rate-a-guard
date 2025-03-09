@@ -88,7 +88,14 @@ const SearchCompany: React.FC<IProps> = ({ redirect = false, onSelectCompany }) 
                                         onClick={(event) => event.stopPropagation()}
                                         href={`/company/${suggestion.id}`}
                                     >
-                                        Go to company&apos;s page
+                                       View Company Ratings
+                                    </Link>
+                                    <Link
+                                        className="underline font-semibold"
+                                        onClick={(event) => event.stopPropagation()}
+                                        href={`/company/rating/${suggestion.id}`}
+                                    >
+                                        Rate Company
                                     </Link>
                                 </div>
                             </div>

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { genericClient } from "@/lib/genericClient";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 type ISearchGuardRequest = {
     text: string;
@@ -83,6 +84,13 @@ const SearchGuard: React.FC<IProps> = ({ selectedCompany }) => {
                                             <span className="font-medium">{suggestion.company?.companyName}</span>
                                         </>
                                     )}
+                                    <Link
+                                        className="underline font-semibold"
+                                        onClick={(event) => event.stopPropagation()}
+                                        href={`/guard/rating/${suggestion.id}`}
+                                    >
+                                        Rate Guard
+                                    </Link>
                                 </div>
                             </div>
                         </li>

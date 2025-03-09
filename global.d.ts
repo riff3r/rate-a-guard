@@ -1,4 +1,4 @@
-interface Tokens {
+interface IAuthTokens {
     access: {
         token: string;
         expires: number;

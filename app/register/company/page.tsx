@@ -1,8 +1,9 @@
 "use client";
 
 import FormWizard, { FormWizardStepProps } from "@/components/ui/form-wizard";
+import { ApiResponse } from "@/lib/apiClient";
 import { genericClient } from "@/lib/genericClient";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 interface ICompanyRegisterRequest {
@@ -21,6 +22,7 @@ interface ICompanyRegisterRequest {
 }
 
 const Page = () => {
+    const router = useRouter();
     const steps: FormWizardStepProps[] = [
         {
             id: "STEP_1",
@@ -101,18 +103,25 @@ const Page = () => {
                     rules: { required: "Company name is required." },
                 },
                 {
-                    label: "Registered Agent Name",
-                    type: "text",
-                    name: "registeredAgentName",
-                    placeholder: "Type registered agent name",
-                    rules: { required: "Registered agent name is required." },
-                },
-                {
                     label: "Email Address",
                     type: "email",
                     name: "emailAddress",
                     placeholder: "Type email address",
                     rules: { required: "Email address is required." },
+                },
+                {
+                    label: "Registered Agent First Name",
+                    type: "text",
+                    name: "registeredAgentFirstName",
+                    placeholder: "Type registered agent first name",
+                    rules: { required: "Registered agent first name is required." },
+                },
+                {
+                    label: "Registered Agent Last Name",
+                    type: "text",
+                    name: "registeredAgentLastName",
+                    placeholder: "Type registered agent last name",
+                    rules: { required: "Registered agent last name is required." },
                 },
                 {
                     label: "Phone Number",
@@ -128,23 +137,26 @@ const Page = () => {
     const defaultValues = {};
 
     const handleSubmit = async (values: ICompanyRegisterRequest) => {
-        const response = await genericClient<ICompanyRegisterRequest, unknown>({
-            url: "/api/companies",
-            method: "POST",
-            data: values,
-        });
-
-        if (response.error) {
-            toast.error(response.error);
-            return;
-        }
-
-        if (response.data) {
-            redirect("/register/company/success");
-            return;
-        }
-
-        toast.error("Something went wrong! Try again later.");
+        await toast.promise(
+            genericClient<ICompanyRegisterRequest, unknown>({
+                url: "/api/companies",
+                method: "POST",
+                data: values,
+            }),
+            {
+                loading: "Processing...",
+                success: (response: ApiResponse<unknown>) => {
+                    if (response.data) {
+                        router.push("/register/company/success");
+                        return "Company registered successfully!";
+                    } else if (response.error) {
+                        throw new Error(response.error as unknown as string);
+                    }
+                    throw new Error("Unexpected response format.");
+                },
+                error: (err: { message: string }) => err.message || "Something went wrong! Try again later.",
+            }
+        );
     };
 
     return (

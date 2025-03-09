@@ -18,7 +18,7 @@ const Success = async ({ params }: { params: Promise<{ slug: string }> }) => {
                     onClick={async () => {
                         "use server";
 
-                        redirect(`/company/${slug}`);
+                        redirect(`/company/status/${slug}`);
                     }}
                 >
                     View Company Status

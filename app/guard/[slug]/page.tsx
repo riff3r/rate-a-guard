@@ -161,7 +161,9 @@ const Guard = async ({ params }: { params: Promise<{ slug: string }> }) => {
                                     <span className="font-semibold">Joined:</span> {company.joiningDate}
                                 </p>
                                 <p className="text-sm text-gray-600">
-                                    <span className="font-semibold">Resigned:</span> {company.resignationDate}
+                                    {
+                                        company.resignationDate ? <><span className="font-semibold">Resigned:</span> {company.resignationDate}</> : <span className="font-semibold">Currently Working</span>
+                                    }
                                 </p>
                             </li>
                         ))}

@@ -1,5 +1,6 @@
 import Footer from "@/components/common/footer/Footer";
 import Navbar from "@/components/common/navbar/Navbar";
+import "../../../globals.css";
 import { cookies } from "next/headers";
 
 const RootLayout = async ({
